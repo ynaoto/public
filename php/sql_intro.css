@@ -1,0 +1,25 @@
+th, td {
+  border-width: thin;
+  border-style: inset;
+  border-radius: 3px;
+}
+
+em {
+  color: red;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.mind {
+  background: lightblue;
+}
+.input {
+  background: lightgreen;
+}
+.output {
+  width: 80em;
+  background: lightyellow;
+}
+.note {
+  background: white;
+}
