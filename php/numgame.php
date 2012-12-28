@@ -7,9 +7,17 @@ if (isset($_SESSION["ans"])) {
     $ans = rand(1, 100);
 }
 
+if (isset($_SESSION["count"])) {
+    $count = $_SESSION["count"];
+} else {
+    $count = 1;
+}
+
 if (isset($_POST["num"])) {
     $num = $_POST["num"];
+    $count++;
 }
+
 ?>
 <html>
     <head>
@@ -18,10 +26,14 @@ if (isset($_POST["num"])) {
     </head>
     <body>
         <?php if (isset($num) && $num == $ans): ?>
-            正解！
-            <?php $ans = null; ?>
+            <?=$count-1?>回目に正解！
+            <?php
+                $ans = null;
+                $count = null;
+            ?>
             <a href="">リトライ</a>
         <?php else: ?>
+            <?=$count?>回の挑戦！
             <?php if (!isset($num)): ?>
                 1〜100! 
             <?php elseif ($num < $ans): ?>
@@ -40,4 +52,5 @@ if (isset($_POST["num"])) {
 </html>
 <?php
 $_SESSION["ans"] = $ans;
+$_SESSION["count"] = $count;
 ?>
