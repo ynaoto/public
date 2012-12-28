@@ -64,7 +64,7 @@ if (($result = check_params($y, $m)) !== true) {
                     echo "<td>";
                     if (1 <= $d && $d <= $dz) {
                         $item = $dbh->get_schedule($year, $month, $d);
-                        $url = ""; // TODO here
+                        $url = "schedule.php?y={$year}&m={$month}&d={$d}";
                         echo "<a href=\"{$url}\"";
                         if ($item) {
                             echo " title=\"{$item}\"";

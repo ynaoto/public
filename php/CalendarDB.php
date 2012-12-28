@@ -38,4 +38,37 @@ class CalendarDB extends PDO
 
         return $item;
     }
+
+    public function set_schedule($year, $month, $day, $item)
+    {
+        $ymd = "{$year}-{$month}-{$day}";
+
+        try {
+            if ($item == "") {
+                $stmt = $this->prepare("DELETE FROM schedules WHERE date=:date");
+                $stmt->bindValue(":date", $ymd);
+                if ($stmt->execute()) {
+                    return true;
+                }
+            }
+
+            $stmt = $this->prepare("INSERT INTO schedules (date,item) VALUES (:date,:item)");
+            $stmt->bindValue(":date", $ymd);
+            $stmt->bindValue(":item", $item);
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            $stmt = $this->prepare("UPDATE schedules SET item=:item WHERE date=:date");
+            $stmt->bindValue(":date", $ymd);
+            $stmt->bindValue(":item", $item);
+            if ($stmt->execute()) {
+                return true;
+            }
+        } catch (Exception $e) {
+            die("スケジュールの設定に失敗しました (".$e->getMessage().")");
+        }
+
+        die("ここに来てはいけない");
+    }
 }
