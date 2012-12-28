@@ -1,4 +1,12 @@
 <?php
+require("CalendarDB.php");
+
+try {
+    $dbh = new CalendarDB();
+} catch (Exception $e) {
+    die("カレンダーDBに繋がらない (".$e->getMessage().")");
+}
+
 function check_params($y, $m)
 {
     if (!ctype_digit($y)) return "年 '$y' に数字ではない文字があります";
@@ -26,6 +34,7 @@ if (($result = check_params($y, $m)) !== true) {
     <head>
         <title>Calendar</title>
         <meta http-equiv=content-type content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="calendar.css">
     </head>
     <body>
         <?php
@@ -54,7 +63,14 @@ if (($result = check_params($y, $m)) !== true) {
                 for ($w = 0; $w < 7; $w++) {
                     echo "<td>";
                     if (1 <= $d && $d <= $dz) {
-                        echo $d;
+                        $item = $dbh->get_schedule($year, $month, $d);
+                        $url = ""; // TODO here
+                        echo "<a href=\"{$url}\"";
+                        if ($item) {
+                            echo " title=\"{$item}\"";
+                            echo " class=\"booked\"";
+                        }
+                        echo ">$d</a>";
                     }
                     echo "</td>";
                     $d++;
