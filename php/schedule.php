@@ -22,9 +22,9 @@ if (isset($_POST["ok"]) || isset($_POST["cancel"])) {
 
 function check_params($y, $m, $d)
 {
-    if (!ctype_digit($y)) return "年 '$y' に数字ではない文字があります";
-    if (!ctype_digit($m)) return "月 '$m' に数字ではない文字があります";
-    if (!ctype_digit($d)) return "日 '$d' に数字ではない文字があります";
+    if (!ctype_digit("$y")) return "年 '$y' に数字ではない文字があります";
+    if (!ctype_digit("$m")) return "月 '$m' に数字ではない文字があります";
+    if (!ctype_digit("$d")) return "日 '$d' に数字ではない文字があります";
     if (!checkdate($m, $d, $y)) return "{$y}年{$m}月{$d}日は不正です";
 
     return true;

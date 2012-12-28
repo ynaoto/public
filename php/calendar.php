@@ -9,8 +9,8 @@ try {
 
 function check_params($y, $m)
 {
-    if (!ctype_digit($y)) return "年 '$y' に数字ではない文字があります";
-    if (!ctype_digit($m)) return "月 '$m' に数字ではない文字があります";
+    if (!ctype_digit("$y")) return "年 '$y' に数字ではない文字があります";
+    if (!ctype_digit("$m")) return "月 '$m' に数字ではない文字があります";
     if (!checkdate($m, 1, $y)) return "{$y}年{$m}月は不正です";
 
     return true;
@@ -22,6 +22,24 @@ $month = $m = date("m", $t);
 
 if (isset($_REQUEST["year"])) $y = $_REQUEST["year"];
 if (isset($_REQUEST["month"])) $m = $_REQUEST["month"];
+
+if (isset($_POST["prev_year"])) {
+    $y--;
+} else if (isset($_POST["next_year"])) {
+    $y++;
+} else if (isset($_POST["prev_month"])) {
+    $m--;
+    if ($m < 1) {
+        $y--;
+        $m = 12;
+    }
+} else if (isset($_POST["next_month"])) {
+    $m++;
+    if (12 < $m) {
+        $y++;
+        $m = 1;
+    }
+}
 
 if (($result = check_params($y, $m)) !== true) {
     $error = $result;
@@ -43,7 +61,17 @@ if (($result = check_params($y, $m)) !== true) {
         }
         ?>
         <table>
-            <caption><?=$year?>年<?=$month?>月</caption>
+            <caption>
+                <form action="calendar.php" method="post">
+                    <input type="submit" name="prev_year" value="<<"/>
+                    <input type="submit" name="prev_month" value="<"/>
+                    <?=$year?>年<?=$month?>月
+                    <input type="submit" name="next_month" value=">"/>
+                    <input type="submit" name="next_year" value=">>"/>
+                    <input type="hidden" name="year" value="<?=$year?>"/>
+                    <input type="hidden" name="month" value="<?=$month?>"/>
+                </form>
+            </caption>
             <?php
             $wn = ["日", "月", "火", "水", "木", "金", "土"];
             echo "<tr>";
