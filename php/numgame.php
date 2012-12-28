@@ -1,6 +1,12 @@
 <?php
 session_start();
 
+if (isset($_POST["name"])) {
+    $name = $_POST["name"];
+} else if (isset($_SESSION["name"])) {
+    $name = $_SESSION["name"];
+}
+
 if (isset($_SESSION["ans"])) {
     $ans = $_SESSION["ans"];
 } else {
@@ -25,15 +31,21 @@ if (isset($_POST["num"])) {
         <meta http-equiv=content-type content="text/html; charset=UTF-8">
     </head>
     <body>
-        <?php if (isset($num) && $num == $ans): ?>
-            <?=$count-1?>回目に正解！
+        <?php if (!isset($name)): ?>
+            <form action="numgame.php" method="post">
+                 あなたのお名前は？<input type="text" name="name" />
+                 <input type="submit" />
+            </form>
+        <?php elseif (isset($num) && $num == $ans): ?>
+            <?=$name?>さん、<?=$count-1?>回目に正解！
             <?php
+                $name = null;
                 $ans = null;
                 $count = null;
             ?>
             <a href="">リトライ</a>
         <?php else: ?>
-            <?=$count?>回の挑戦！
+            <?=$name?>さん、<?=$count?>回目の挑戦！
             <?php if (!isset($num)): ?>
                 1〜100! 
             <?php elseif ($num < $ans): ?>
@@ -51,6 +63,7 @@ if (isset($_POST["num"])) {
     </body>
 </html>
 <?php
+$_SESSION["name"] = $name;
 $_SESSION["ans"] = $ans;
 $_SESSION["count"] = $count;
 ?>
