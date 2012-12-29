@@ -95,8 +95,8 @@ if (($result = check_params($y, $m)) !== true) {
                         $url = "schedule.php?y={$year}&m={$month}&d={$d}";
                         echo "<a href=\"{$url}\"";
                         if ($item) {
-                            echo " title=\"{$item}\"";
-                            echo " class=\"booked\"";
+                            echo ' title="'.htmlspecialchars($item).'"';
+                            echo ' class="booked"';
                         }
                         echo ">$d</a>";
                     }
