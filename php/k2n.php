@@ -38,11 +38,19 @@ class 漢数字
     }
 
     const HEAD = 1;
-    const NUM = 2;
+    const PNUM = 2;
     const TAIL = 3;
+
+    const STR = "string";
+    const NUM = "number";
+
+    const C = "class";
+    const V = "value";
 
     static public function k2n($k)
     {
+        $a = [];
+
         $pos = HEAD;
         $s1 = $s2 = "";
 
@@ -55,15 +63,15 @@ class 漢数字
             if ($pos == TAIL) {
                 $s2 .= $c;
             } else if (isset(self::$knum[$c])) {
-                $pos = NUM;
+                $pos = PNUM;
                 $n = 10 * $n + self::$knum[$c];
             } else if (isset(self::$kunit1[$c])) {
-                $pos = NUM;
+                $pos = PNUM;
                 if ($n == 0) $n = 1;
                 array_push($stack, $n * self::$kunit1[$c]);
                 $n = 0;
             } else if (isset(self::$kunit2[$c])) {
-                $pos = NUM;
+                $pos = PNUM;
                 if (!isset($result)) $result = 0;
                 $result += self::sum($n, $stack) * self::$kunit2[$c];
                 $n = 0;
@@ -76,11 +84,24 @@ class 漢数字
             }
         }
     
-        return $s1."$result".$s2;
+        if ($s1 != "") $a[] = [ self::C => self::STR, self::V => $s1 ];
+        $a[] = [ self::C => self::NUM, self::V => $result ];
+        if ($s2 != "") $a[] = [ self::C => self::STR, self::V => $s2 ];
+
+        return $a;
     }
 }
 
 function k2n($k)
 {
-    return 漢数字::k2n($k);
+    $a = 漢数字::k2n($k);
+    $s = "";
+    while (($i = array_shift($a)) != null) {
+        $t = $i['value'];
+        if ($i['class'] == 'number') {
+            $t = number_format($t);
+        }
+        $s .= $t;
+    }
+    return $s;
 }
