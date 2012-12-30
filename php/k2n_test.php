@@ -27,8 +27,7 @@ $tv = [
         <?php endforeach; ?>
         <?php
             if (isset($knum)) {
-                $s = k2n($knum);
-                echo "$knum → $s (".number_format($s).")";
+                echo "$knum → ".k2n($knum);
             }
         ?>
     </body>
