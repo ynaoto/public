@@ -51,14 +51,6 @@ class 漢数字
         "垓" => [ self::C => self::MOC, self::V => 100000000000000000000 ],
     ];
 
-    static private function sum($n, &$stack)
-    {
-        while (($i = array_pop($stack)) != null) {
-           $n += $i;
-        }
-        return $n;
-    }
-
     const S = "string";
     const N = "number";
 
@@ -66,56 +58,53 @@ class 漢数字
     {
         $a = [];
 
+        if (($len = mb_strlen($k)) < 1) {
+            return $a;
+        }
+
+        $s = "";
+        for ($i = 0; $i < $len && !isset(self::$knum[$c = mb_substr($k, $i, 1)]); $i++) {
+            $s .= $c;
+        }
+        if ($s != "") {
+            $a[] = [ self::C => self::S, self::V => $s ];
+        }
+
         $stack = [];
         $n = 0;
-
-        $len = mb_strlen($k);
-        for ($i = 0; $i < $len; $i++) {
-            $c = mb_substr($k, $i, 1);
-            if (isset(self::$knum[$c])) {
-                if (isset($s)) {
-                    $a[] = [ self::C => self::S, self::V => $s ];
-                    unset($s);
+        for (; $i < $len && isset(self::$knum[$c = mb_substr($k, $i, 1)]); $i++) {
+            $v = self::$knum[$c];
+            switch ($v[self::C]) {
+            case self::NUM:
+                if (!isset($acc)) $acc = 0;
+                $acc = 10 * $acc + $v[self::V];
+                break;
+            case self::JHS:
+                if (!isset($acc)) $acc = 1;
+                array_push($stack, $acc * $v[self::V]);
+                unset($acc);
+                break;
+            case self::MOC:
+                if (isset($acc)) {
+                    array_push($stack, $acc);
+                    unset($acc);
                 }
-                $v = self::$knum[$c];
-                switch ($v[self::C]) {
-                case self::NUM:
-                    $n = 10 * $n + $v[self::V];
-                    break;
-                case self::JHS:
-                    if ($n == 0) $n = 1;
-                    array_push($stack, $n * $v[self::V]);
-                    $n = 0;
-                    break;
-                case self::MOC:
-                    if (!isset($result)) $result = 0;
-                    $result += self::sum($n, $stack) * $v[self::V];
-                    $n = 0;
-                    break;
-                default:
-                    die("ここに来ては困る");
-                }
-            } else {
-                if (isset($result)) {
-                    $result += self::sum($n, $stack);
-                    $a[] = [ self::C => self::N, self::V => $result ];
-                    unset($result);
-                    $n = 0;
-                }
-                if (!isset($s)) $s = "";
-                $s .= $c;
+                $n += array_sum($stack) * $v[self::V];
+                $stack = [];
+                break;
+            default:
+                die("ここに来ては困る");
             }
         }
-    
-        if (isset($s)) {
-            $a[] = [ self::C => self::S, self::V => $s ];
-        } 
-        if (isset($result)) {
-            $result += self::sum($n, $stack);
-            $a[] = [ self::C => self::N, self::V => $result ];
+
+        if (isset($acc)) array_push($stack, $acc);
+        if ($n != 0) array_push($stack, $n);
+        if (count($stack) > 0) {
+            $n = array_sum($stack);
+            $a[] = [ self::C => self::N, self::V => $n ];
         }
 
-        return $a;
+        return array_merge($a, self::k2n(mb_substr($k, $i)));
     }
 }
 
