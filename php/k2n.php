@@ -1,92 +1,119 @@
 <?php
 class 漢数字
 {
+    const C = "class";
+    const V = "value";
+
+    const NUM = 1;
+    const JHS = 2; // じゅう、ひゃく、せん
+    const MOC = 3; // まん、おく、ちょう
+
     static public $knum = [
-        "〇" => 0, "零" => 0,
-        "一" => 1, "弌" => 1, "壱" => 1, "壹" => 1,
-        "二" => 2, "弍" => 2, "弐" => 2, "貳" => 2,
-        "三" => 3, "参" => 3, "參" => 3,
-        "四" => 4, "肆" => 4,
-        "五" => 5, "伍" => 5,
-        "六" => 6, "陸" => 6,
-        "七" => 7, "質" => 7,
-        "八" => 8, "捌" => 8,
-        "九" => 9, "玖" => 9,
-    ];
-    static public $kunit1 = [
-        "十" => 10, "拾" => 10,
-        "百" => 100, "佰" => 100,
-        "千" => 1000, "阡" => 1000, "仟" => 1000,
-    ];
-    static public $kunit2 = [
-        "万" => 10000, "萬" => 10000,
-        "億" => 100000000,
-        "兆" => 1000000000000,
-        "京" => 10000000000000000,
-        "垓" => 100000000000000000000,
+        "〇" => [ self::C => self::NUM, self::V => 0 ],
+        "零" => [ self::C => self::NUM, self::V => 0 ],
+        "一" => [ self::C => self::NUM, self::V => 1 ],
+        "弌" => [ self::C => self::NUM, self::V => 1 ],
+        "壱" => [ self::C => self::NUM, self::V => 1 ],
+        "壹" => [ self::C => self::NUM, self::V => 1 ],
+        "二" => [ self::C => self::NUM, self::V => 2 ],
+        "弍" => [ self::C => self::NUM, self::V => 2 ],
+        "弐" => [ self::C => self::NUM, self::V => 2 ],
+        "貳" => [ self::C => self::NUM, self::V => 2 ],
+        "三" => [ self::C => self::NUM, self::V => 3 ],
+        "参" => [ self::C => self::NUM, self::V => 3 ],
+        "參" => [ self::C => self::NUM, self::V => 3 ],
+        "四" => [ self::C => self::NUM, self::V => 4 ],
+        "肆" => [ self::C => self::NUM, self::V => 4 ],
+        "五" => [ self::C => self::NUM, self::V => 5 ],
+        "伍" => [ self::C => self::NUM, self::V => 5 ],
+        "六" => [ self::C => self::NUM, self::V => 6 ],
+        "陸" => [ self::C => self::NUM, self::V => 6 ],
+        "七" => [ self::C => self::NUM, self::V => 7 ],
+        "質" => [ self::C => self::NUM, self::V => 7 ],
+        "八" => [ self::C => self::NUM, self::V => 8 ],
+        "捌" => [ self::C => self::NUM, self::V => 8 ],
+        "九" => [ self::C => self::NUM, self::V => 9 ],
+        "玖" => [ self::C => self::NUM, self::V => 9 ],
+
+        "十" => [ self::C => self::JHS, self::V => 10 ],
+        "拾" => [ self::C => self::JHS, self::V => 10 ],
+        "百" => [ self::C => self::JHS, self::V => 100 ],
+        "佰" => [ self::C => self::JHS, self::V => 100 ],
+        "千" => [ self::C => self::JHS, self::V => 1000 ],
+        "阡" => [ self::C => self::JHS, self::V => 1000 ],
+        "仟" => [ self::C => self::JHS, self::V => 1000 ],
+
+        "万" => [ self::C => self::MOC, self::V => 10000 ],
+        "萬" => [ self::C => self::MOC, self::V => 10000 ],
+        "億" => [ self::C => self::MOC, self::V => 100000000 ],
+        "兆" => [ self::C => self::MOC, self::V => 1000000000000 ],
+        "京" => [ self::C => self::MOC, self::V => 10000000000000000 ],
+        "垓" => [ self::C => self::MOC, self::V => 100000000000000000000 ],
     ];
 
     static private function sum($n, &$stack)
     {
-        $n += array_reduce($stack, function($result, $item) {
-            $result += $item;
-            return $result;
-        });
-        $stack = [];
-
+        while (($i = array_pop($stack)) != null) {
+           $n += $i;
+        }
         return $n;
     }
 
-    const HEAD = 1;
-    const PNUM = 2;
-    const TAIL = 3;
-
-    const STR = "string";
-    const NUM = "number";
-
-    const C = "class";
-    const V = "value";
+    const S = "string";
+    const N = "number";
 
     static public function k2n($k)
     {
         $a = [];
 
-        $pos = HEAD;
-        $s1 = $s2 = "";
-
         $stack = [];
         $n = 0;
-    
+
         $len = mb_strlen($k);
         for ($i = 0; $i < $len; $i++) {
             $c = mb_substr($k, $i, 1);
-            if ($pos == TAIL) {
-                $s2 .= $c;
-            } else if (isset(self::$knum[$c])) {
-                $pos = PNUM;
-                $n = 10 * $n + self::$knum[$c];
-            } else if (isset(self::$kunit1[$c])) {
-                $pos = PNUM;
-                if ($n == 0) $n = 1;
-                array_push($stack, $n * self::$kunit1[$c]);
-                $n = 0;
-            } else if (isset(self::$kunit2[$c])) {
-                $pos = PNUM;
-                if (!isset($result)) $result = 0;
-                $result += self::sum($n, $stack) * self::$kunit2[$c];
-                $n = 0;
-            } else if ($pos == HEAD) {
-                $s1 .= $c;
+            if (isset(self::$knum[$c])) {
+                if (isset($s)) {
+                    $a[] = [ self::C => self::S, self::V => $s ];
+                    unset($s);
+                }
+                $v = self::$knum[$c];
+                switch ($v[self::C]) {
+                case self::NUM:
+                    $n = 10 * $n + $v[self::V];
+                    break;
+                case self::JHS:
+                    if ($n == 0) $n = 1;
+                    array_push($stack, $n * $v[self::V]);
+                    $n = 0;
+                    break;
+                case self::MOC:
+                    if (!isset($result)) $result = 0;
+                    $result += self::sum($n, $stack) * $v[self::V];
+                    $n = 0;
+                    break;
+                default:
+                    die("ここに来ては困る");
+                }
             } else {
-                $pos = TAIL;
-                $s2 = $c;
-                $result += self::sum($n, $stack);
+                if (isset($result)) {
+                    $result += self::sum($n, $stack);
+                    $a[] = [ self::C => self::N, self::V => $result ];
+                    unset($result);
+                    $n = 0;
+                }
+                if (!isset($s)) $s = "";
+                $s .= $c;
             }
         }
     
-        if ($s1 != "") $a[] = [ self::C => self::STR, self::V => $s1 ];
-        $a[] = [ self::C => self::NUM, self::V => $result ];
-        if ($s2 != "") $a[] = [ self::C => self::STR, self::V => $s2 ];
+        if (isset($s)) {
+            $a[] = [ self::C => self::S, self::V => $s ];
+        } 
+        if (isset($result)) {
+            $result += self::sum($n, $stack);
+            $a[] = [ self::C => self::N, self::V => $result ];
+        }
 
         return $a;
     }
