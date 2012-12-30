@@ -8,7 +8,7 @@ class 漢数字
     const JHS = 2; // じゅう、ひゃく、せん
     const MOC = 3; // まん、おく、ちょう
 
-    static public $knum = [
+    static public $kn = [
         "〇" => [ self::C => self::NUM, self::V => 0 ],
         "零" => [ self::C => self::NUM, self::V => 0 ],
         "一" => [ self::C => self::NUM, self::V => 1 ],
@@ -69,7 +69,7 @@ class 漢数字
         }
 
         $s = "";
-        for ($i = 0; $i < $len && !isset(self::$knum[$c = mb_substr($k, $i, 1)]); $i++) {
+        for ($i = 0; $i < $len && !isset(self::$kn[$c = mb_substr($k, $i, 1)]); $i++) {
             $s .= $c;
         }
         if ($s != "") {
@@ -78,8 +78,8 @@ class 漢数字
 
         $stack = [];
         $n = 0;
-        for (; $i < $len && isset(self::$knum[$c = mb_substr($k, $i, 1)]); $i++) {
-            $v = self::$knum[$c];
+        for (; $i < $len && isset(self::$kn[$c = mb_substr($k, $i, 1)]); $i++) {
+            $v = self::$kn[$c];
             switch ($v[self::C]) {
             case self::NUM:
                 if (!isset($acc)) $acc = 0;
@@ -106,8 +106,7 @@ class 漢数字
         if (isset($acc)) array_push($stack, $acc);
         if ($n != 0) array_push($stack, $n);
         if (count($stack) > 0) {
-            $n = array_sum($stack);
-            $a[] = [ self::C => self::N, self::V => $n ];
+            $a[] = [ self::C => self::N, self::V => array_sum($stack)];
         }
 
         return array_merge($a, self::k2n(mb_substr($k, $i)));
