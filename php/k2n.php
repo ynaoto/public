@@ -92,6 +92,9 @@ class 漢数字
                     array_push($stack, $acc);
                     unset($acc);
                 }
+                if (count($stack) < 1) {
+                    array_push($stack, 1);
+                }
                 $n += array_sum($stack) * $v[self::V];
                 $stack = [];
                 break;
@@ -115,4 +118,33 @@ function k2n($k)
     return array_reduce(漢数字::k2n($k), function($result, $item) {
         return $result .= is_int($item) ? number_format($item) : $item;
     });
+}
+
+function n2k($n, $moc = [ "万", "億", "兆", "京", "垓" ])
+{
+    $nk1 = [ "", "壱", "弍", "参", "四", "伍", "六", "七", "八", "九" ];
+    $nk =  [ "",   "", "弍", "参", "四", "伍", "六", "七", "八", "九" ];
+
+    if ($n < 0) {
+        return "マイナス".n2k(-$n);
+    }
+    if ($n < 10) {
+        return $nk1[$n];
+    }
+    if ($n < 100) {
+        return $nk[floor($n/10)]."拾".n2k($n % 10);
+    }
+    if ($n < 1000) {
+        return $nk[floor($n/100)]."百".n2k($n % 100);
+    }
+    if ($n < 10000) {
+        return $nk[floor($n/1000)]."千".n2k($n % 1000);
+    }
+
+    if (count($moc) < 1) {
+        die("その数はでかすぎる");
+    }
+
+    $u = array_shift($moc);
+    return n2k(floor($n / 10000), $moc).$u.n2k($n % 10000);
 }
