@@ -98,11 +98,14 @@ $tv = [
     </head>
     <body>
         <?php foreach ($tv as $v): ?>
-            <form action="k2n_test.php" method="post">
-                <input type="text" name="knum" value="<?=$v?>" />
-                <input type="submit" />
-            </form>
+            <ul>
+                <li><?=$v?> → <?=k2n($v)?></li>
+            </ul>
         <?php endforeach; ?>
+        <form action="k2n_test.php" method="post">
+            <input type="text" name="knum" value="" />
+            <input type="submit" />
+        </form>
         <?php
             if (isset($knum)) {
                 echo "$knum → ".k2n($knum);
