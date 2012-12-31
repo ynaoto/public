@@ -112,13 +112,7 @@ class 漢数字
 
 function k2n($k)
 {
-    $a = 漢数字::k2n($k);
-    $s = "";
-    while (($i = array_shift($a)) != null) {
-        if (is_int($i)) {
-            $i = number_format($i);
-        }
-        $s .= $i;
-    }
-    return $s;
+    return array_reduce(漢数字::k2n($k), function($result, $item) {
+        return $result .= is_int($item) ? number_format($item) : $item;
+    });
 }
