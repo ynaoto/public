@@ -90,15 +90,19 @@ $tv = [
 "拾壱 円",
 "壱 円",
 ];
-$tv2 = [
-65536,
-165536,
-1165536,
-11165536,
-111165536,
-111011101111,
-1111011101111,
-];
+
+function k2n2s($k)
+{
+    return array_reduce(k2n($k), function($v, $w) {
+        if (is_int($w)) {
+            $v .= number_format($w);
+            $v .= " [".n2k($w)."] ";
+        } else {
+            $v .= $w;
+        }
+        return $v;
+    });
+}
 ?>
 <html>
     <head>
@@ -108,7 +112,7 @@ $tv2 = [
     <body>
         <?php foreach ($tv as $v): ?>
             <ul>
-                <li><?=$v?> → <?=k2n($v)?></li>
+                <li><?=$v?> → <?=k2n2s($v)?></li>
             </ul>
         <?php endforeach; ?>
         <form action="k2n_test.php" method="post">
@@ -117,13 +121,8 @@ $tv2 = [
         </form>
         <?php
             if (isset($knum)) {
-                echo "$knum → ".k2n($knum);
+                echo "$knum → ".k2n2s($knum);
             }
         ?>
-        <?php foreach ($tv2 as $v): ?>
-            <ul>
-                <li><?=$v?> → <?=n2k($v)?></li>
-            </ul>
-        <?php endforeach; ?>
     </body>
 </html>

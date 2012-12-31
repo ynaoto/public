@@ -115,9 +115,7 @@ class 漢数字
 
 function k2n($k)
 {
-    return array_reduce(漢数字::k2n($k), function($result, $item) {
-        return $result .= is_int($item) ? number_format($item) : $item;
-    });
+    return 漢数字::k2n($k);
 }
 
 function n2k($n, $moc = [ "万", "億", "兆", "京", "垓" ])
