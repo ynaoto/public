@@ -57,9 +57,6 @@ class 漢数字
         "垓" => [ self::C => self::MOC, self::V => 100000000000000000000 ],
     ];
 
-    const S = "string";
-    const N = "number";
-
     static public function k2n($k)
     {
         $a = [];
@@ -73,7 +70,7 @@ class 漢数字
             $s .= $c;
         }
         if ($s != "") {
-            $a[] = [ self::C => self::S, self::V => $s ];
+            $a[] = $s;
         }
 
         $stack = [];
@@ -106,7 +103,7 @@ class 漢数字
         if (isset($acc)) array_push($stack, $acc);
         if ($n != 0) array_push($stack, $n);
         if (count($stack) > 0) {
-            $a[] = [ self::C => self::N, self::V => array_sum($stack)];
+            $a[] = array_sum($stack);
         }
 
         return array_merge($a, self::k2n(mb_substr($k, $i)));
@@ -118,11 +115,10 @@ function k2n($k)
     $a = 漢数字::k2n($k);
     $s = "";
     while (($i = array_shift($a)) != null) {
-        $t = $i['value'];
-        if ($i['class'] == 'number') {
-            $t = number_format($t);
+        if (is_int($i)) {
+            $i = number_format($i);
         }
-        $s .= $t;
+        $s .= $i;
     }
     return $s;
 }
