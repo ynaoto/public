@@ -57,25 +57,18 @@ class 漢数字
         "垓" => [ self::C => self::MOC, self::V => 100000000000000000000 ],
     ];
 
-    static public function k2n($k)
+    static public function k2n_a($k)
     {
-        $a = [];
-
         if (($len = mb_strlen($k)) < 1) {
-            return $a;
-        }
-
-        $s = "";
-        for ($i = 0; $i < $len && !isset(self::$kn[$c = mb_substr($k, $i, 1)]); $i++) {
-            $s .= $c;
-        }
-        if ($s != "") {
-            $a[] = $s;
+            die("こんなことがあってはいけない");
         }
 
         $stack = [];
         $n = 0;
-        for (; $i < $len && isset(self::$kn[$c = mb_substr($k, $i, 1)]); $i++) {
+        for ($i = 0; $i < $len; $i++) {
+            if (!isset(self::$kn[$c = mb_substr($k, $i, 1)])) {
+                die("こんなことがあってはいけない");
+            }
             $v = self::$kn[$c];
             switch ($v[self::C]) {
             case self::NUM:
@@ -105,11 +98,8 @@ class 漢数字
 
         if (isset($acc)) array_push($stack, $acc);
         if ($n != 0) array_push($stack, $n);
-        if (count($stack) > 0) {
-            $a[] = array_sum($stack);
-        }
 
-        return array_merge($a, self::k2n(mb_substr($k, $i)));
+        return array_sum($stack);
     }
 
     static public function k2n_b($k)
@@ -152,7 +142,7 @@ class 漢数字
         return $n;
     }
 
-    static public function k2n_a($k)
+    static public function k2n($k)
     {
         if ($k == "") {
             return [];
@@ -165,16 +155,17 @@ class 漢数字
 
         $a = [];
         if (isset($m[1]) && $m[1] != "") $a[] = $m[1];
+        //if (isset($m[2]) && $m[2] != "") $a[] = self::k2n_a($m[2]);
         if (isset($m[2]) && $m[2] != "") $a[] = self::k2n_b($m[2]);
-        if (isset($m[3]) && $m[3] != "") $a = array_merge($a, self::k2n_a($m[3]));
+        if (isset($m[3]) && $m[3] != "") $a = array_merge($a, self::k2n($m[3]));
+
         return $a;
     }
 }
 
 function k2n($k)
 {
-    //return 漢数字::k2n($k);
-    return 漢数字::k2n_a($k);
+    return 漢数字::k2n($k);
 }
 
 function n2k($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
