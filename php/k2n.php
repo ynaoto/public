@@ -59,17 +59,11 @@ class 漢数字
 
     static public function k2n_a($k)
     {
-        if (($len = mb_strlen($k)) < 1) {
-            die("こんなことがあってはいけない");
-        }
-
+        $len = mb_strlen($k);
         $stack = [];
         $n = 0;
         for ($i = 0; $i < $len; $i++) {
-            if (!isset(self::$kn[$c = mb_substr($k, $i, 1)])) {
-                die("こんなことがあってはいけない");
-            }
-            $v = self::$kn[$c];
+            $v = self::$kn[mb_substr($k, $i, 1)];
             switch ($v[self::C]) {
             case self::NUM:
                 if (!isset($acc)) $acc = 0;
@@ -104,19 +98,13 @@ class 漢数字
 
     static public function k2n_b($k)
     {
-        if (($len = mb_strlen($k)) < 1) {
-            die("こんなことがあってはいけない");
-        }
-
+        $len = mb_strlen($k);
         $mx = 1;
         $my = 1;
         $n = 0;
         $ghost_one = false;
         for ($i = $len - 1; 0 <= $i; $i--) {
-            if (!isset(self::$kn[$c = mb_substr($k, $i, 1)])) {
-                die("こんなことがあってはいけない");
-            }
-            $v = self::$kn[$c];
+            $v = self::$kn[mb_substr($k, $i, 1)];
             switch ($v[self::C]) {
             case self::NUM:
                 $n += $my * $mx * $v[self::V];
