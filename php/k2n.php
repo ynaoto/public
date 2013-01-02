@@ -154,10 +154,10 @@ class 漢数字
         preg_match("/([^$kns]*)([$kns]*)(.*)/u", $k, $m);
 
         $a = [];
-        if (isset($m[1]) && $m[1] != "") $a[] = $m[1];
-        //if (isset($m[2]) && $m[2] != "") $a[] = self::k2n_a($m[2]);
-        if (isset($m[2]) && $m[2] != "") $a[] = self::k2n_b($m[2]);
-        if (isset($m[3]) && $m[3] != "") $a = array_merge($a, self::k2n($m[3]));
+        if (!empty($m[1])) $a[] = $m[1];
+        //if (!empty($m[2])) $a[] = self::k2n_a($m[2]);
+        if (!empty($m[2])) $a[] = self::k2n_b($m[2]);
+        if (!empty($m[3])) $a = array_merge($a, self::k2n($m[3]));
 
         return $a;
     }
