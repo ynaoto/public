@@ -111,11 +111,70 @@ class 漢数字
 
         return array_merge($a, self::k2n(mb_substr($k, $i)));
     }
+
+    static public function k2n_b($k)
+    {
+        if (($len = mb_strlen($k)) < 1) {
+            die("こんなことがあってはいけない");
+        }
+
+        $mx = 1;
+        $my = 1;
+        $n = 0;
+        $ghost_one = false;
+        for ($i = $len - 1; 0 <= $i; $i--) {
+            if (!isset(self::$kn[$c = mb_substr($k, $i, 1)])) {
+                die("こんなことがあってはいけない");
+            }
+            $v = self::$kn[$c];
+            switch ($v[self::C]) {
+            case self::NUM:
+                $n += $my * $mx * $v[self::V];
+                $mx *= 10;
+                $ghost_one = false;
+                break;
+            case self::JHS:
+                if ($ghost_one) $n += $my * $mx * 1;
+                $mx = $v[self::V];
+                $ghost_one = true;
+                break;
+            case self::MOC:
+                if ($ghost_one) $n += $my * $mx * 1;
+                $my = $v[self::V];
+                $mx = 1;
+                break;
+            default:
+                die("ここに来ては困る");
+            }
+        }
+        if ($ghost_one) $n += $my * $mx * 1;
+
+        return $n;
+    }
+
+    static public function k2n_a($k)
+    {
+        if ($k == "") {
+            return [];
+        }
+
+        $kns = array_reduce(array_keys(self::$kn), function($v, $w) {
+            return $v .= $w;
+        });
+        preg_match("/([^$kns]*)([$kns]*)(.*)/u", $k, $m);
+
+        $a = [];
+        if (isset($m[1]) && $m[1] != "") $a[] = $m[1];
+        if (isset($m[2]) && $m[2] != "") $a[] = self::k2n_b($m[2]);
+        if (isset($m[3]) && $m[3] != "") $a = array_merge($a, self::k2n_a($m[3]));
+        return $a;
+    }
 }
 
 function k2n($k)
 {
-    return 漢数字::k2n($k);
+    //return 漢数字::k2n($k);
+    return 漢数字::k2n_a($k);
 }
 
 function n2k($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
