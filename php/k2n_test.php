@@ -110,11 +110,11 @@ function k2n2s($k)
         <meta http-equiv=content-type content="text/html; charset=UTF-8">
     </head>
     <body>
+        <ul>
         <?php foreach ($tv as $v): ?>
-            <ul>
-                <li><?=$v?> → <?=k2n2s($v)?></li>
-            </ul>
+            <li><?=$v?> → <?=k2n2s($v)?></li>
         <?php endforeach; ?>
+        </ul>
         <form action="k2n_test.php" method="post">
             <input type="text" name="knum" value="" />
             <input type="submit" />
