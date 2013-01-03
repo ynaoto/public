@@ -8,7 +8,7 @@ class 漢数字
     const JHS = 2; // じゅう、ひゃく、せん
     const MOC = 3; // まん、おく、ちょう
 
-    static public $kn = [
+    static private $kn = [
         "〇" => [ self::C => self::NUM, self::V => 0 ],
         "零" => [ self::C => self::NUM, self::V => 0 ],
         "一" => [ self::C => self::NUM, self::V => 1 ],
@@ -56,8 +56,9 @@ class 漢数字
         "京" => [ self::C => self::MOC, self::V => 10000000000000000 ],
         "垓" => [ self::C => self::MOC, self::V => 100000000000000000000 ],
     ];
+    static private $kns = null;
 
-    static public function k2n_a($k)
+    static private function k2n_a($k)
     {
         $len = mb_strlen($k);
         $stack = [];
@@ -96,7 +97,7 @@ class 漢数字
         return array_sum($stack);
     }
 
-    static public function k2n_b($k)
+    static private function k2n_b($k)
     {
         $len = mb_strlen($k);
         $mx = 1;
@@ -130,7 +131,7 @@ class 漢数字
         return $n;
     }
 
-    static public function k2n_c($k)
+    static private function k2n_c($k)
     {
         $len = mb_strlen($k);
         $n = 0;
@@ -165,10 +166,12 @@ class 漢数字
             return [];
         }
 
-        $kns = array_reduce(array_keys(self::$kn), function($v, $w) {
-            return $v .= $w;
-        });
-        preg_match("/([^$kns]*)([$kns]*)(.*)/u", $k, $m);
+        if (self::$kns == null) {
+            self::$kns = array_reduce(array_keys(self::$kn), function($v, $w) {
+                return $v .= $w;
+            });
+        }
+        preg_match("/([^".self::$kns."]*)([".self::$kns."]*)(.*)/u", $k, $m);
 
         $a = [];
         if (!empty($m[1])) $a[] = $m[1];
