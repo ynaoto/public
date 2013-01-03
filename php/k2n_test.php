@@ -96,7 +96,15 @@ function k2n2s($k)
     return array_reduce(k2n($k), function($v, $w) {
         if (is_int($w)) {
             $v .= number_format($w);
-            $v .= " [".n2k($w)."] ";
+            $k = n2k($w);
+            $a = k2n($k);
+            if (count($a) != 1) {
+                $v .= "<em>戻り値が変！</em>";
+            }
+            $v .= " [$k; ".number_format($a[0])."] ";
+            if ($w != $a[0]) {
+                $v .= "<em>不一致！</em>";
+            }
         } else {
             $v .= $w;
         }
@@ -108,6 +116,9 @@ function k2n2s($k)
     <head>
         <title>k2n test</title>
         <meta http-equiv=content-type content="text/html; charset=UTF-8">
+        <style>
+            em { color: red; }
+        </style>
     </head>
     <body>
         <ul>
