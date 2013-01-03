@@ -130,6 +130,35 @@ class 漢数字
         return $n;
     }
 
+    static public function k2n_c($k)
+    {
+        $len = mb_strlen($k);
+        $n = 0;
+        for ($i = 0; $i < $len; $i++) {
+            $v = self::$kn[mb_substr($k, $i, 1)];
+            $c = $v[self::C];
+            if ($c == self::NUM) {
+                if (!isset($acc)) $acc = 0;
+                $acc = 10 * $acc + $v[self::V];
+            } else if ($c == self::JHS) {
+                if (!isset($acc)) $acc = 1;
+                $n += $acc * $v[self::V];
+                unset($acc);
+            } else if ($c == self::MOC) {
+                if (isset($acc)) $n += $acc;
+                if ($n == 0) $n = 1;
+                $n = $n * $v[self::V] + self::k2n_c(mb_substr($k, $i + 1));
+                unset($acc);
+                break;
+            } else {
+                die("ここに来ては困る");
+            }
+        }
+        if (isset($acc)) $n += $acc;
+
+        return $n;
+    }
+
     static public function k2n($k)
     {
         if ($k == "") {
@@ -144,7 +173,8 @@ class 漢数字
         $a = [];
         if (!empty($m[1])) $a[] = $m[1];
         //if (!empty($m[2])) $a[] = self::k2n_a($m[2]);
-        if (!empty($m[2])) $a[] = self::k2n_b($m[2]);
+        //if (!empty($m[2])) $a[] = self::k2n_b($m[2]);
+        if (!empty($m[2])) $a[] = self::k2n_c($m[2]);
         if (!empty($m[3])) $a = array_merge($a, self::k2n($m[3]));
 
         return $a;
