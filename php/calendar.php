@@ -1,10 +1,12 @@
 <?php
 require("CalendarDB.php");
 
+$error = "";
+
 try {
     $dbh = new CalendarDB();
 } catch (Exception $e) {
-    die("カレンダーDBに繋がらない (".$e->getMessage().")");
+    $error .= "カレンダーDBに繋がらない (".$e->getMessage().")<br/>";
 }
 
 function check_params($y, $m)
@@ -42,7 +44,7 @@ if (isset($_POST["prev_year"])) {
 }
 
 if (($result = check_params($y, $m)) !== true) {
-    $error = $result;
+    $error .= $result."<br/>";
 } else {
     $year = $y;
     $month = $m;
@@ -57,7 +59,7 @@ if (($result = check_params($y, $m)) !== true) {
     <body>
         <?php
         if (isset($error)) {
-            echo "<p>$error</p>";
+            echo $error;
         }
         ?>
         <table>
@@ -91,14 +93,18 @@ if (($result = check_params($y, $m)) !== true) {
                 for ($w = 0; $w < 7; $w++) {
                     echo "<td>";
                     if (1 <= $d && $d <= $dz) {
-                        $item = $dbh->get_schedule($year, $month, $d);
-                        $url = "schedule.php?y={$year}&m={$month}&d={$d}";
-                        echo "<a href=\"{$url}\"";
-                        if ($item) {
-                            echo ' title="'.htmlspecialchars($item).'"';
-                            echo ' class="booked"';
+                        if (empty($dbh)) {
+                            echo $d;
+                        } else {
+                            $item = $dbh->get_schedule($year, $month, $d);
+                            $url = "schedule.php?y={$year}&m={$month}&d={$d}";
+                            echo "<a href=\"{$url}\"";
+                            if ($item) {
+                                echo ' title="'.htmlspecialchars($item).'"';
+                                echo ' class="booked"';
+                            }
+                            echo ">$d</a>";
                         }
-                        echo ">$d</a>";
                     }
                     echo "</td>";
                     $d++;
