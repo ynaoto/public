@@ -7,7 +7,7 @@ class CalendarDB extends PDO
         $dbuser = "calendarman";
         $dbpass = "calendarpass";
         $dbname = "calendar";
-        $dsn = "mysql:dbname={$dbname};host={$dbhost}";
+        $dsn = "mysql:dbname={$dbname};host={$dbhost};charset=utf8";
         parent::__construct($dsn, $dbuser, $dbpass);
     }
 
