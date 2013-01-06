@@ -126,6 +126,7 @@ function k2n2s($k, $f)
             <li><?=$v?> → <?=k2n2s($v, "k2n_a")?></li>
             <li><?=$v?> → <?=k2n2s($v, "k2n_b")?></li>
             <li><?=$v?> → <?=k2n2s($v, "k2n_c")?></li>
+            <li><?=$v?> → <?=k2n2s($v, "k2n_d")?></li>
         <?php endforeach; ?>
         </ul>
         <form action="k2n_test.php" method="post">
