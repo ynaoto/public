@@ -186,7 +186,9 @@ class 漢数字
         }
         if (isset($acc)) $n += $acc;
 
-        return $n + self::k2n_c(mb_substr($k, $i + 1));
+        if ($len <= $i) return $n;
+
+        return $n + self::k2n_d(mb_substr($k, $i + 1));
     }
 
     static public function k2n($k, $f)
