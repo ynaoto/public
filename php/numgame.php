@@ -5,6 +5,8 @@ if (isset($_POST["name"])) {
     $name = $_POST["name"];
 } else if (isset($_SESSION["name"])) {
     $name = $_SESSION["name"];
+} else {
+    $name = null;
 }
 
 if (isset($_SESSION["ans"])) {
@@ -47,7 +49,7 @@ if (isset($_POST["num"])) {
         <?php else: ?>
             <?=$name?>さん、<?=$count?>回目の挑戦！
             <?php if (!isset($num)): ?>
-                1〜100! 
+                1～100の数を入れてみて
             <?php elseif ($num < $ans): ?>
                 ちっちゃ！
             <?php elseif ($num > $ans): ?>
