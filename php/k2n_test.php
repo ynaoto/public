@@ -93,7 +93,7 @@ $tv = [
 
 function k2n2s($k, $f)
 {
-    return array_reduce(k2n($k, $f), function($v, $w) {
+    return array_reduce(k2n($k, $f), function($v, $w) use ($f) {
         if (is_int($w)) {
             $v .= number_format($w);
             $k = n2k($w);

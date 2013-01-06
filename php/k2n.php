@@ -160,7 +160,7 @@ class 漢数字
         return $n;
     }
 
-    static public function k2n($k, $f = "k2n_c")
+    static public function k2n($k, $f)
     {
         if ($k == "") {
             return [];
@@ -179,15 +179,15 @@ class 漢数字
         //if (!empty($m[2])) $a[] = self::k2n_b($m[2]);
         //if (!empty($m[2])) $a[] = self::k2n_c($m[2]);
         if (!empty($m[2])) $a[] = self::$f($m[2]);
-        if (!empty($m[3])) $a = array_merge($a, self::k2n($m[3]));
+        if (!empty($m[3])) $a = array_merge($a, self::k2n($m[3], $f));
 
         return $a;
     }
 }
 
-function k2n($k)
+function k2n($k, $f)
 {
-    return 漢数字::k2n($k);
+    return 漢数字::k2n($k, $f);
 }
 
 function n2k($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
