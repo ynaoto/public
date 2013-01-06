@@ -160,7 +160,7 @@ class 漢数字
         return $n;
     }
 
-    static public function k2n($k)
+    static public function k2n($k, $f = "k2n_c")
     {
         if ($k == "") {
             return [];
@@ -177,7 +177,8 @@ class 漢数字
         if (!empty($m[1])) $a[] = $m[1];
         //if (!empty($m[2])) $a[] = self::k2n_a($m[2]);
         //if (!empty($m[2])) $a[] = self::k2n_b($m[2]);
-        if (!empty($m[2])) $a[] = self::k2n_c($m[2]);
+        //if (!empty($m[2])) $a[] = self::k2n_c($m[2]);
+        if (!empty($m[2])) $a[] = self::$f($m[2]);
         if (!empty($m[3])) $a = array_merge($a, self::k2n($m[3]));
 
         return $a;

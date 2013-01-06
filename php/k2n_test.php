@@ -91,13 +91,13 @@ $tv = [
 "壱 円",
 ];
 
-function k2n2s($k)
+function k2n2s($k, $f)
 {
-    return array_reduce(k2n($k), function($v, $w) {
+    return array_reduce(k2n($k, $f), function($v, $w) {
         if (is_int($w)) {
             $v .= number_format($w);
             $k = n2k($w);
-            $a = k2n($k);
+            $a = k2n($k, $f);
             if (count($a) != 1) {
                 $v .= "<em>戻り値が変！</em>";
             }
@@ -123,7 +123,9 @@ function k2n2s($k)
     <body>
         <ul>
         <?php foreach ($tv as $v): ?>
-            <li><?=$v?> → <?=k2n2s($v)?></li>
+            <li><?=$v?> → <?=k2n2s($v, "k2n_a")?></li>
+            <li><?=$v?> → <?=k2n2s($v, "k2n_b")?></li>
+            <li><?=$v?> → <?=k2n2s($v, "k2n_c")?></li>
         <?php endforeach; ?>
         </ul>
         <form action="k2n_test.php" method="post">
