@@ -218,25 +218,22 @@ function k2n($k, $f)
     return 漢数字::k2n($k, $f);
 }
 
-function n2k($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
+function n2k_sub($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
 {
     $nk1 = [ "", "壱", "弐", "参", "四", "伍", "六", "七", "八", "九" ];
     $nk  = [ "", ""  , "弐", "参", "四", "伍", "六", "七", "八", "九" ];
 
-    if ($n < 0) {
-        return "マイナス".n2k(-$n);
-    }
     if ($n < 10) {
         return $nk1[$n];
     }
     if ($n < 100) {
-        return $nk[floor($n/10)]."拾".n2k($n % 10);
+        return $nk[floor($n/10)]."拾".n2k_sub($n % 10);
     }
     if ($n < 1000) {
-        return $nk[floor($n/100)]."百".n2k($n % 100);
+        return $nk[floor($n/100)]."百".n2k_sub($n % 100);
     }
     if ($n < 10000) {
-        return $nk[floor($n/1000)]."千".n2k($n % 1000);
+        return $nk[floor($n/1000)]."千".n2k_sub($n % 1000);
     }
 
     if (count($moc) < 1) {
@@ -245,5 +242,16 @@ function n2k($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
 
     $t = array_shift($moc);
     $u = floor($n / 10000);
-    return n2k($u, $moc).($u % 10000 != 0 ? $t : "").n2k($n % 10000);
+    return n2k_sub($u, $moc).($u % 10000 != 0 ? $t : "").n2k_sub($n % 10000);
+}
+
+function n2k($n)
+{
+    if ($n == 0) {
+        return "零";
+    }
+    if ($n < 0) {
+        return "マイナス".n2k_sub(-$n);
+    }
+    return n2k_sub($n);
 }
