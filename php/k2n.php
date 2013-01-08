@@ -227,16 +227,13 @@ function n2k_sub($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
         return $nk1[$n];
     }
     if ($n < 100) {
-        $r = $n % 10;
-        return $nk[($n - $r) / 10]."拾".n2k_sub($r);
+        return $nk[(int)($n / 10)]."拾".n2k_sub($n % 10);
     }
     if ($n < 1000) {
-        $r = $n % 100;
-        return $nk[($n - $r) / 100]."百".n2k_sub($r);
+        return $nk[(int)($n / 100)]."百".n2k_sub($n % 100);
     }
     if ($n < 10000) {
-        $r = $n % 1000;
-        return $nk[($n - $r) / 1000]."千".n2k_sub($r);
+        return $nk[(int)($n / 1000)]."千".n2k_sub($n % 1000);
     }
 
     if (count($moc) < 1) {
@@ -244,9 +241,8 @@ function n2k_sub($n, $moc = [ "萬", "億", "兆", "京", "垓" ])
     }
 
     $t = array_shift($moc);
-    $r = $n % 10000;
-    $u = ($n - $r) / 10000;
-    return n2k_sub($u, $moc).($u % 10000 != 0 ? $t : "").n2k_sub($r);
+    $u = (int)($n / 10000);
+    return n2k_sub($u, $moc).($u % 10000 != 0 ? $t : "").n2k_sub($n % 10000);
 }
 
 function n2k($n)
