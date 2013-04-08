@@ -1,0 +1,42 @@
+<!--
+    Command launcher test.
+    Copyright (c) 2013 Naoto Yoshioka
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Command launcher test</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+            function do_one(cmd) {
+                console.log('**** [' + cmd + '] =>');
+                var source = new EventSource('./command.php' + '?command=' + cmd);
+                source.addEventListener('open', function(e) {
+                    //console.log('opened');
+                }, false);
+                source.addEventListener('message', function(e) {
+                    console.log(e.data);
+                }, false);
+                source.addEventListener('finished', function(e) {
+                    console.log('**** [' + cmd + '] finished');
+                    source.close();
+                }, false);
+                source.addEventListener('error', function(e) {
+                    //console.log('error');
+                }, false);
+            }
+            window.onload = function () {
+            };
+            function doit() {
+                var cmd = document.getElementById("cmd").value;
+								console.log(cmd);
+                do_one(cmd);
+            }
+        </script>
+        <h1>てすと</h1>
+				<input id="cmd" />
+				<button onclick="doit();">Do it</button>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2013 Naoto Yoshioka
+#
+<IfModule alias_module>
+
+   Alias /EventSource "===HERE==="
+   <Directory "===HERE===">
+     Options None
+     AllowOverride None
+     Order allow,deny
+     Allow from all
+   </Directory>
+
+</IfModule>
