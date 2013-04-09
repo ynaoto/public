@@ -11,9 +11,6 @@ $cmd = $_REQUEST['command'];
     header("Content-type: text/event-stream; charset=utf-8");
     header('Cache-Control: no-cache');
 
-    echo "retry: 0\n";
-    flush();
-
     //chdir("..");
     $proc = popen($cmd . ' 2>&1', 'r');
     while ($s = fgets($proc)) {
@@ -22,6 +19,3 @@ $cmd = $_REQUEST['command'];
         flush();
     }
     pclose($proc);
-
-    echo "event: finished\n";
-    flush();

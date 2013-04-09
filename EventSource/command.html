@@ -1,8 +1,8 @@
+<!DOCTYPE html>
 <!--
     Command launcher test.
     Copyright (c) 2013 Naoto Yoshioka
 -->
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -13,19 +13,16 @@
             function do_one(cmd) {
                 console.log('**** [' + cmd + '] =>');
                 var source = new EventSource('./command.php' + '?command=' + cmd);
-                source.addEventListener('open', function(e) {
-                    //console.log('opened');
-                }, false);
-                source.addEventListener('message', function(e) {
+                source.onmessage = function(e) {
                     console.log(e.data);
-                }, false);
-                source.addEventListener('finished', function(e) {
-                    console.log('**** [' + cmd + '] finished');
-                    source.close();
-                }, false);
-                source.addEventListener('error', function(e) {
+                };
+                source.onerror = function(e) {
                     //console.log('error');
-                }, false);
+                    if (source.readyState === EventSource.CONNECTING) {
+                        source.close(); // no need to connect twice
+                        console.log('**** [' + cmd + '] finished');
+                    }
+                };
             }
             window.onload = function () {
             };
@@ -36,7 +33,7 @@
             }
         </script>
         <h1>てすと</h1>
-        <input id="cmd" />
+        <input id="cmd" value="make test"/>
         <button onclick="doit();">Do it</button>
     </body>
 </html>
