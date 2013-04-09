@@ -21,11 +21,11 @@ JQ = "http://code.jquery.com/jquery-1.9.1.min.js"	\
      "http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css"
 
 test::
-# doesn't work. the target file is truncated to zero.
-	for f in $(JQ); do wget -O `basename $$f` $$f; done
+# all works (the last one is best)
+#	for f in $(JQ); do wget -O `basename $$f` $$f; done
 #	for f in $(JQ); do wget $$f -O `basename $$f`; done
 #	for f in $(JQ); do wget -O - $$f >`basename $$f`; done
-# works (the last one is best)
 #	for f in $(JQ); do wget -N $$f; done
 #	for f in $(JQ); do curl $$f >`basename $$f`; done
 #	for f in $(JQ); do curl -R -o `basename $$f` $$f; done
+	for f in $(JQ); do curl -R -O $$f; done
