@@ -85,7 +85,7 @@ term(FILE *fp, int *result)
 {
   /*
    * TERM :=
-   *   | '(' EXPR ')' // not implement yet
+   *   | '(' EXPR ')'
    *   | NUM
    *   | NUM '*' TERM
    */
