@@ -1,0 +1,27 @@
+#!/usr/bin/awk -f
+
+function eval(s) {
+  cmd = "/usr/bin/awk " "\"BEGIN { print " s  ";}\"";
+  cmd |getline t;
+  close(cmd);
+  return t;
+}
+
+{
+  expr = $1;
+  result[expr] = eval(expr);
+}
+
+END {
+  for (expr in result) {
+    cmd = "echo '" expr "' |./a.out";
+    cmd |getline r;
+    close(cmd);
+    printf expr " => " result[expr] " : " r;
+    if (result[expr] == r) {
+      print " OK!";
+    } else {
+      print " WRONG!";
+    }
+  }
+}
