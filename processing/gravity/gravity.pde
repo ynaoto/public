@@ -10,12 +10,11 @@ class M {
     float G = 0.05;
     float f = G * m * o.m / d2;
     float ax = f * dx, ay = f * dy;
-    
-    vx += ax; x += vx;
-    vy += ay; y += vy;
+    vx += ax; vy += ay;
   }
 
   void draw() {
+    x += vx; y += vy;
     ellipse(x, y, m, m);
   }
 }
@@ -30,10 +29,14 @@ void setup() {
   for (int i = 0; i < 2; i++) {
     M sun = new M();
     sun.x = (i+1)*width/3;
-    sun.y = (i+1)*height/3;
-    sun.m = 100;
+    sun.y = height/2;
+    sun.m = 150;
     suns.add(sun);
   }
+  suns.get(0).vx = 20;
+  suns.get(0).vy = -20;
+  suns.get(1).vx = -20;
+  suns.get(1).vy = 20;
   
   planets = new ArrayList<M>();
 }
@@ -52,7 +55,9 @@ void draw() {
   pushStyle();
   fill(0, 1);
   rect(0, 0, width, height);
-  fill(#FCA708, 5);
+  fill(#FCA708, 50);
+  suns.get(0).update(suns.get(1));
+  suns.get(1).update(suns.get(0));
   for (int i = 0; i < suns.size(); i++) {
     suns.get(i).draw();
   }
