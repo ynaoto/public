@@ -116,7 +116,7 @@ term(FILE *fp, int *result)
   } else if (tok == TOK_MUL) {
     op = mul;
   } else {
-    fprintf(stderr, "term: invalid  operator %s\n", tok2s(tok));
+    fprintf(stderr, "term: invalid operator %s\n", tok2s(tok));
     return TOK_INVALID;
   }
 
@@ -148,7 +148,7 @@ expr(FILE *fp, int *result)
     } else if (tok == TOK_MINUS) {
       op = minus;
     } else {
-      fprintf(stderr, "term: invalid  operator %s\n", tok2s(tok));
+      fprintf(stderr, "term: invalid operator %s\n", tok2s(tok));
       break;
     }
 
