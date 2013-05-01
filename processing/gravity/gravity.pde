@@ -39,6 +39,8 @@ void setup() {
   suns.get(1).vy = 20;
   
   planets = new ArrayList<M>();
+  
+  background(0);
 }
 
 void mousePressed() {
