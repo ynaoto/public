@@ -14,8 +14,8 @@ class Camera
   Point2D proj(Point3D p)
   {
     Point2D q = new Point2D();
-    q.x = p.x / (d + p.z);
-    q.y = p.y / (d + p.z);
+    q.x = d * p.x / (d + p.z);
+    q.y = d * p.y / (d + p.z);
     return q;
   }
 }
@@ -43,6 +43,7 @@ void setup()
 void draw()
 {
   background(0);
+  cam.d = (float)(width - mouseX) / width;
   int n = stars.size();
   for (int i = 0; i < n; i++) {
     Point3D p = stars.get(i);
@@ -50,10 +51,10 @@ void draw()
     if (0 < p.z) {
       Point2D q = cam.proj(p);
       float a = 20 / (cam.d + p.z);
-      fill(255);
       ellipse(q.x + width/2, q.y + height/2, a, a);
     } else {
       p.z = 100;
     }
   }
+  text("cam.d: " + cam.d, 10, 30);
 }
