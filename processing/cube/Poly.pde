@@ -31,7 +31,7 @@ class Point3D
 
   float norm()
   {
-    return mag(x, y, z);
+    return sqrt(x*x+y*y+z*z);
   }
 
   Point3D normalize()
