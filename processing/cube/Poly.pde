@@ -1,6 +1,19 @@
 class Point2D
 {
   float x, y;
+
+  Point2D sub(Point2D o)
+  {
+    Point2D p = new Point2D();
+    p.x = x - o.x;
+    p.y = y - o.y;
+    return p;
+  }
+
+  float cross(Point2D o)
+  {
+    return x*o.y-y*o.x;
+  }
 }
 
 class Point3D
@@ -63,11 +76,13 @@ class Poly
   float x, y, z;
   float r, theta, phi;
   Point3D v[];
+  color c;
   private Point2D v2d[];
   
   Poly(int n)
   {
     v = new Point3D[n];
+    c = color(255);
     v2d = new Point2D[n];
     for (int i = 0; i < v.length; i++) {
       v[i] = new Point3D();
@@ -76,24 +91,24 @@ class Poly
   
   void draw(Camera cam, Point3D lit)
   {
-    Point3D a = v[1].sub(v[0]);
-    Point3D b = v[1].sub(v[2]);
-    Point3D nrm = a.cross(b).normalize();
-    
     for (int i = 0; i < v.length; i++) {
       v2d[i] = cam.proj(v[i]);
       v2d[i].x += width / 2;
       v2d[i].y += height / 2;
     }
-    float ax = v2d[1].x - v2d[0].x;
-    float ay = v2d[1].y - v2d[0].y;
-    float bx = v2d[2].x - v2d[0].x;
-    float by = v2d[2].y - v2d[0].y;
-    float ext = ax*by-ay*bx;
-    if (0 < ext) {
-      float d = lit.norm();
-      float p = lit.prod(nrm) / d;
-      fill(120 * p + 130);
+    Point2D a2d = v2d[1].sub(v2d[0]);
+    Point2D b2d = v2d[2].sub(v2d[1]);
+    float cross = a2d.cross(b2d);
+    if (0 < cross) {
+      Point3D a3d = v[1].sub(v[0]);
+      Point3D b3d = v[2].sub(v[1]);
+      Point3D nrm = a3d.cross(b3d).normalize();
+      float L = abs(lit.normalize().prod(nrm));
+      float ambient = 130;
+      float R = L * red(c) + ambient;
+      float G = L * green(c) + ambient;
+      float B = L * blue(c) + ambient;
+      fill(R, G, B);
       noStroke();
       beginShape();
       for (int i = 0; i < v2d.length; i++) {
