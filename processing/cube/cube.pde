@@ -1,4 +1,5 @@
 Camera cam;
+Point3D lit;
 Poly surfaces[];
 
 float sz = 200;
@@ -25,8 +26,12 @@ void setup()
 {
   size(640, 640);
   background(0);
+
   cam = new Camera();
-  cam.d = 1;
+  cam.d = 500;
+
+  lit = new Point3D();
+  lit.x = 0; lit.y = 0; lit.z = -10;
 
   surfaces = new Square[6];
   Poly p;
@@ -64,14 +69,18 @@ void setup()
 void draw()
 {
   background(0);
-  cam.d = 1000.0 * mouseX / width;
+  
+  lit.x = 100.0 * (mouseX - (width/2)) / width;
+  lit.y = 100.0 * (mouseY - (height/2)) / height;
+  
   for (int i = 0; i < surfaces.length; i++) {
     Poly p = surfaces[i];
     p.move(0, 0, -cz);
     p.rot(PI/200, PI/100, 0);
     p.move(0, 0, cz);
-    p.draw(cam);
+    p.draw(cam, lit);
   }
   fill(255);
   text("cam.d: " + cam.d, 10, 30);
+  text("lit: " + lit.x + ", " + lit.y + ", " + lit.z, 10, 50);
 }
