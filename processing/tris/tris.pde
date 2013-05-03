@@ -43,10 +43,22 @@ class Tri
       v2d[i].x += width / 2;
       v2d[i].y += height / 2;
     }
-    stroke(255);
-    line(v2d[0].x, v2d[0].y, v2d[1].x, v2d[1].y);
-    line(v2d[1].x, v2d[1].y, v2d[2].x, v2d[2].y);
-    line(v2d[2].x, v2d[2].y, v2d[0].x, v2d[0].y);
+    float ax = v2d[1].x - v2d[0].x;
+    float ay = v2d[1].y - v2d[0].y;
+    float bx = v2d[2].x - v2d[0].x;
+    float by = v2d[2].y - v2d[0].y;
+    float ext = ax*by-ay*bx;
+    if (ext < 0) {
+      fill(255, 0, 0);
+    } else {
+      fill(255);
+    }
+    noStroke();
+    beginShape();
+    vertex(v2d[0].x, v2d[0].y);
+    vertex(v2d[1].x, v2d[1].y);
+    vertex(v2d[2].x, v2d[2].y);
+    endShape(CLOSE);
   }
 
   void rot(float rx, float ry, float rz)
@@ -121,10 +133,11 @@ void draw()
       p.v[1].z += 100;
       p.v[2].z += 100;
     }
-    p.rot(PI/500, PI/500, PI/500);
+    p.rot(PI/100, PI/100, PI/100);
     if (0 < p.v[0].z && 0 < p.v[1].z && 0 < p.v[2].z) {
       p.draw(cam);
     }
   }
+  fill(255);
   text("cam.d: " + cam.d, 10, 30);
 }
