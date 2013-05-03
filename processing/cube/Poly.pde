@@ -6,6 +6,44 @@ class Point2D
 class Point3D
 {
   float x, y, z;
+
+  Point3D sub(Point3D o)
+  {
+    Point3D p = new Point3D();
+    p.x = x - o.x;
+    p.y = y - o.y;
+    p.z = z - o.z;
+    return p;
+  }
+
+  float norm()
+  {
+    return mag(x, y, z);
+  }
+
+  Point3D normalize()
+  {
+    Point3D p = new Point3D();
+    float d = norm();
+    p.x = x / d;
+    p.y = y / d;
+    p.z = z / d;
+    return p;
+  }
+
+  float prod(Point3D o)
+  {
+    return x * o.x + y * o.y + z * o.z;
+  }
+
+  Point3D cross(Point3D o)
+  {
+    Point3D p = new Point3D();
+    p.x = y * o.z - z * o.y;
+    p.y = z * o.x - x * o.z;
+    p.z = x * o.y - y * o.x;
+    return p;
+  }
 }
 
 class Camera
@@ -36,30 +74,11 @@ class Poly
     }
   }
   
-  Point3D cross(Point3D v1, Point3D v2)
-  {
-    Point3D p = new Point3D();
-    p.x = v1.y * v2.z - v1.z * v2.y;
-    p.y = v1.z * v2.x - v1.x * v2.z;
-    p.z = v1.x * v2.y - v1.y * v2.x;
-    return p;
-  }
-  
   void draw(Camera cam, Point3D lit)
   {
-    Point3D a = new Point3D();
-    Point3D b = new Point3D();
-    a.x = v[1].x - v[0].x;
-    a.y = v[1].y - v[0].y;
-    a.z = v[1].z - v[0].z;
-    b.x = v[1].x - v[2].x;
-    b.y = v[1].y - v[2].y;
-    b.z = v[1].z - v[2].z;
-    Point3D nrm = cross(a, b);
-    float d = mag(nrm.x, nrm.y, nrm.z);
-    nrm.x /= d;
-    nrm.y /= d;
-    nrm.z /= d;
+    Point3D a = v[1].sub(v[0]);
+    Point3D b = v[1].sub(v[2]);
+    Point3D nrm = a.cross(b).normalize();
     
     for (int i = 0; i < v.length; i++) {
       v2d[i] = cam.proj(v[i]);
@@ -72,8 +91,8 @@ class Poly
     float by = v2d[2].y - v2d[0].y;
     float ext = ax*by-ay*bx;
     if (0 < ext) {
-      /*float*/ d = mag(lit.x, lit.y, lit.z);
-      float p = (lit.x * nrm.x + lit.y * nrm.y + lit.z * nrm.z) / d;
+      float d = lit.norm();
+      float p = lit.prod(nrm) / d;
       fill(120 * p + 130);
       noStroke();
       beginShape();
