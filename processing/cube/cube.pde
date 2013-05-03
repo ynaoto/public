@@ -31,32 +31,38 @@ void setup()
   cam.d = 500;
 
   lit = new Point3D();
-  lit.x = 0; lit.y = 0; lit.z = -10;
+  lit.x = 0; lit.y = 0; lit.z = 10;
 
   surfaces = new Square[6];
   Poly p;
 
   surfaces[0] = p = new Square();
+  p.c = color(0, 0, 255);
   p.rot(0, -0*PI/2, 0);
   p.move(0, 0, -sz/2);
 
   surfaces[1] = p = new Square();
+  p.c = color(0, 255, 0);
   p.rot(0, -1*PI/2, 0);
   p.move(sz/2, 0, 0);
 
   surfaces[2] = p = new Square();
+  p.c = color(0, 255, 255);
   p.rot(0, -2*PI/2, 0);
   p.move(0, 0, sz/2);
   
   surfaces[3] = p = new Square();
+  p.c = color(255, 0, 0);
   p.rot(0, -3*PI/2, 0);
   p.move(-sz/2, 0, 0);
   
   surfaces[4] = p = new Square();
+  p.c = color(255, 0, 255);
   p.rot(-1*PI/2, 0, 0);
   p.move(0, sz/2, 0);
   
   surfaces[5] = p = new Square();
+  p.c = color(255, 255, 0);
   p.rot(1*PI/2, 0, 0);
   p.move(0, -sz/2, 0);
   
@@ -70,8 +76,8 @@ void draw()
 {
   background(0);
   
-  lit.x = 100.0 * (mouseX - (width/2)) / width;
-  lit.y = 100.0 * (mouseY - (height/2)) / height;
+  lit.x = 100.0 * ((width/2) - mouseX) / width;
+  lit.y = 100.0 * ((height/2) - mouseY) / height;
   
   for (int i = 0; i < surfaces.length; i++) {
     Poly p = surfaces[i];
