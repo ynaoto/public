@@ -71,6 +71,19 @@ class Camera
   }
 }
 
+class Light extends Point3D
+{
+  float ambient = 80;
+  color apply(Point3D nrm, color c)
+  {
+    float L = max(0.1, normalize().prod(nrm));
+    float R = L * red(c) + ambient;
+    float G = L * green(c) + ambient;
+    float B = L * blue(c) + ambient;
+    return color(R, G, B);
+  }
+}
+
 class Poly
 {
   float x, y, z;
@@ -89,7 +102,7 @@ class Poly
     }
   }
   
-  void draw(Camera cam, Point3D lit)
+  void draw(Camera cam, Light lit)
   {
     for (int i = 0; i < v.length; i++) {
       v2d[i] = cam.proj(v[i]);
@@ -103,12 +116,7 @@ class Poly
       Point3D a3d = v[1].sub(v[0]);
       Point3D b3d = v[2].sub(v[1]);
       Point3D nrm = a3d.cross(b3d).normalize();
-      float L = abs(lit.normalize().prod(nrm));
-      float ambient = 130;
-      float R = L * red(c) + ambient;
-      float G = L * green(c) + ambient;
-      float B = L * blue(c) + ambient;
-      fill(R, G, B);
+      fill(lit.apply(nrm, c));
       noStroke();
       beginShape();
       for (int i = 0; i < v2d.length; i++) {

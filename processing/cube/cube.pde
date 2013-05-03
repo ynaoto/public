@@ -1,5 +1,5 @@
 Camera cam;
-Point3D lit;
+Light lit;
 Poly surfaces[];
 
 float sz = 200;
@@ -30,39 +30,58 @@ void setup()
   cam = new Camera();
   cam.d = 500;
 
-  lit = new Point3D();
+  lit = new Light();
   lit.x = 0; lit.y = 0; lit.z = 10;
 
   surfaces = new Square[6];
   Poly p;
 
+  color colors[]  = {
+    /**/
+    color(0, 0, 200),
+    color(0, 200, 0),
+    color(0, 200, 200),
+    color(200, 0, 0),
+    color(200, 0, 200),
+    color(200, 200, 0),
+    /**/
+    /*
+    color(200),
+    color(200),
+    color(200),
+    color(200),
+    color(200),
+    color(200),
+    /**/
+  };
+  
   surfaces[0] = p = new Square();
-  p.c = color(0, 0, 255);
+  p.c = colors[0];
   p.rot(0, -0*PI/2, 0);
   p.move(0, 0, -sz/2);
 
   surfaces[1] = p = new Square();
-  p.c = color(0, 255, 0);
+  p.c = colors[1];
   p.rot(0, -1*PI/2, 0);
   p.move(sz/2, 0, 0);
 
   surfaces[2] = p = new Square();
-  p.c = color(0, 255, 255);
+  p.c = colors[2];
   p.rot(0, -2*PI/2, 0);
   p.move(0, 0, sz/2);
   
   surfaces[3] = p = new Square();
-  p.c = color(255, 0, 0);
+  p.c = colors[3];
   p.rot(0, -3*PI/2, 0);
   p.move(-sz/2, 0, 0);
   
   surfaces[4] = p = new Square();
-  p.c = color(255, 0, 255);
+  p.c = colors[4];
   p.rot(-1*PI/2, 0, 0);
   p.move(0, sz/2, 0);
   
   surfaces[5] = p = new Square();
-  p.c = color(255, 255, 0);
+  p.c = colors[5];
   p.rot(1*PI/2, 0, 0);
   p.move(0, -sz/2, 0);
   
