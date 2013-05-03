@@ -20,25 +20,25 @@ class Camera
   }
 }
 
-class Tri
+class Poly
 {
   float x, y, z;
   float r, theta, phi;
   Point3D v[];
   private Point2D v2d[];
   
-  Tri()
+  Poly(int n)
   {
-    v = new Point3D[3];
-    v2d = new Point2D[3];
-    for (int i = 0; i < 3; i++) {
+    v = new Point3D[n];
+    v2d = new Point2D[n];
+    for (int i = 0; i < v.length; i++) {
       v[i] = new Point3D();
     }
   }
   
   void draw(Camera cam)
   {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < v2d.length; i++) {
       v2d[i] = cam.proj(v[i]);
       v2d[i].x += width / 2;
       v2d[i].y += height / 2;
@@ -55,18 +55,25 @@ class Tri
     }
     noStroke();
     beginShape();
-    vertex(v2d[0].x, v2d[0].y);
-    vertex(v2d[1].x, v2d[1].y);
-    vertex(v2d[2].x, v2d[2].y);
+    for (int i = 0; i < v2d.length; i++) {
+      vertex(v2d[i].x, v2d[i].y);
+    }
     endShape(CLOSE);
   }
 
   void rot(float rx, float ry, float rz)
   {
-    float cx = (v[0].x + v[1].x + v[1].x) / 3;
-    float cy = (v[0].y + v[1].y + v[1].y) / 3;
-    float cz = (v[0].z + v[1].z + v[1].z) / 3;
-    for (int i = 0; i < 3; i++) {
+    float cx = 0, cy = 0, cz = 0;
+    for (int i = 0; i < v.length; i++) {
+      cx += v[i].x;
+      cy += v[i].y;
+      cz += v[i].z;
+    }
+    cx /= v.length;
+    cy /= v.length;
+    cz /= v.length;
+
+    for (int i = 0; i < v.length; i++) {
       v[i].x -= cx; v[i].y -= cy; v[i].z -= cz;
       
       float r, theta;
@@ -92,7 +99,7 @@ class Tri
 }
 
 Camera cam;
-ArrayList<Tri> stars;
+ArrayList<Poly> stars;
 
 void setup()
 {
@@ -101,16 +108,17 @@ void setup()
   cam = new Camera();
   cam.d = 1;
 
-  stars = new ArrayList<Tri>();
+  stars = new ArrayList<Poly>();
+  int n = 6;
   for (int i = 0; i < 500; i++) {
-    Tri p = new Tri();
+    Poly p = new Poly(n);
     float r = 10;
     float x = random(-500, 500);
     float y = random(-500, 500);
     float z = random(1, 10000);
-    for (int j = 0; j < 3; j++) {
-      p.v[j].x = r * cos(j * 2*PI/3) + x;
-      p.v[j].y = r * sin(j * 2*PI/3) + y;
+    for (int j = 0; j < p.v.length; j++) {
+      p.v[j].x = r * cos(j * 2*PI/n) + x;
+      p.v[j].y = r * sin(j * 2*PI/n) + y;
       p.v[j].z = z;
     }
     p.rot(random(0, 2*PI), random(0, 2*PI), random(0, 2*PI));
@@ -124,17 +132,24 @@ void draw()
   cam.d = 1000.0 * mouseX / width;
   int n = stars.size();
   for (int i = 0; i < n; i++) {
-    Tri p = stars.get(i);
-    p.v[0].z -= 1;
-    p.v[1].z -= 1;
-    p.v[2].z -= 1;
+    Poly p = stars.get(i);
+    for (int j = 0; j < p.v.length; j++) {
+      p.v[j].z -= 1;
+    }
     if (p.v[0].z < 0) {
-      p.v[0].z += 100;
-      p.v[1].z += 100;
-      p.v[2].z += 100;
+      for (int j = 0; j < p.v.length; j++) {
+        p.v[j].z += 100;
+      }
     }
     p.rot(PI/100, PI/100, PI/100);
-    if (0 < p.v[0].z && 0 < p.v[1].z && 0 < p.v[2].z) {
+    boolean tooNear = false;
+    for (int j = 0; j < p.v.length; j++) {
+      if (p.v[j].z < 0) {
+        tooNear = true;
+        break;
+      }
+    }
+    if (!tooNear) {
       p.draw(cam);
     }
   }
