@@ -51,27 +51,27 @@ class Cube extends Geom
     Poly p;
   
     surfaces[0] = p = new Square(sz, c);
-    p.rot(0, -0*PI/2, 0);
+    p.roty(-0*PI/2);
     p.move(0, 0, -sz/2);
   
     surfaces[1] = p = new Square(sz, c);
-    p.rot(0, -1*PI/2, 0);
+    p.roty(-1*PI/2);
     p.move(sz/2, 0, 0);
   
     surfaces[2] = p = new Square(sz, c);
-    p.rot(0, -2*PI/2, 0);
+    p.roty(-2*PI/2);
     p.move(0, 0, sz/2);
     
     surfaces[3] = p = new Square(sz, c);
-    p.rot(0, -3*PI/2, 0);
+    p.roty(-3*PI/2);
     p.move(-sz/2, 0, 0);
     
     surfaces[4] = p = new Square(sz, c);
-    p.rot(-1*PI/2, 0, 0);
+    p.rotx(-1*PI/2);
     p.move(0, sz/2, 0);
     
     surfaces[5] = p = new Square(sz, c);
-    p.rot(1*PI/2, 0, 0);
+    p.rotx(1*PI/2);
     p.move(0, -sz/2, 0);
   }
 }
