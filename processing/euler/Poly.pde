@@ -151,28 +151,6 @@ class Poly
     return c;
   }
   
-  void rot(float rx, float ry, float rz)
-  {
-    for (int i = 0; i < v.length; i++) {
-      float r, theta;
-
-      r = mag(v[i].z, v[i].y);
-      theta = atan2(v[i].y, v[i].z);
-      v[i].z = r * cos(theta + rx);
-      v[i].y = r * sin(theta + rx);
-
-      r = mag(v[i].z, v[i].x);
-      theta = atan2(v[i].x, v[i].z);
-      v[i].z = r * cos(theta + ry);
-      v[i].x = r * sin(theta + ry);
-
-      r = mag(v[i].x, v[i].y);
-      theta = atan2(v[i].y, v[i].x);
-      v[i].x = r * cos(theta + rz);
-      v[i].y = r * sin(theta + rz);
-    }
-  }
-
   void rotx(float rx)
   {
     for (int i = 0; i < v.length; i++) {
