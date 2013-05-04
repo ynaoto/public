@@ -76,7 +76,7 @@ class Light extends Point3D
   float ambient = 80;
   color apply(Point3D nrm, color c)
   {
-    float L = max(0.1, normalize().prod(nrm));
+    float L = max(0, normalize().prod(nrm));
     float R = L * red(c) + ambient;
     float G = L * green(c) + ambient;
     float B = L * blue(c) + ambient;
@@ -92,10 +92,10 @@ class Poly
   color c;
   private Point2D v2d[];
   
-  Poly(int n)
+  Poly(int n, color c)
   {
     v = new Point3D[n];
-    c = color(255);
+    this.c = c;
     v2d = new Point2D[n];
     for (int i = 0; i < v.length; i++) {
       v[i] = new Point3D();
@@ -180,6 +180,23 @@ class Poly
       v[i].y += dy;
       v[i].z += dz;
     }
+  }
+}
+
+class Square extends Poly
+{
+  Square(int sz, color c)
+  {
+    super(4, c);
+    v[0].x = sz/2;
+    v[0].y = sz/2;
+    v[1].x = -sz/2;
+    v[1].y = sz/2;
+    v[2].x = -sz/2;
+    v[2].y = -sz/2;
+    v[3].x = sz/2;
+    v[3].y = -sz/2;
+    v[0].z = v[1].z = v[2].z = v[3].z = 0;
   }
 }
 
