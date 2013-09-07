@@ -4,13 +4,13 @@ void pr(char *d, int n)
 {
   int leading = 1;
   int i;
-  for (i = n - 1; 0 <= i; i--) {
+  for (i = n - 1; 0 < i; i--) {
     if (!leading || 0 < d[i]) {
       printf("%d", d[i]);
       leading = 0;
     }
   }
-  printf("\n");
+  printf("%d\n", d[0]);
 }
 
 void set(char *d, int n, int x)
