@@ -1,0 +1,479 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		932296B317F94EA300EAA096 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296B217F94EA300EAA096 /* Foundation.framework */; };
+		932296B517F94EA300EAA096 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296B417F94EA300EAA096 /* CoreGraphics.framework */; };
+		932296B717F94EA300EAA096 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296B617F94EA300EAA096 /* UIKit.framework */; };
+		932296BD17F94EA300EAA096 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 932296BB17F94EA300EAA096 /* InfoPlist.strings */; };
+		932296BF17F94EA300EAA096 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 932296BE17F94EA300EAA096 /* main.m */; };
+		932296C317F94EA300EAA096 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 932296C217F94EA300EAA096 /* AppDelegate.m */; };
+		932296C617F94EA300EAA096 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 932296C417F94EA300EAA096 /* Main.storyboard */; };
+		932296C917F94EA300EAA096 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 932296C817F94EA300EAA096 /* ViewController.m */; };
+		932296CB17F94EA300EAA096 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 932296CA17F94EA300EAA096 /* Images.xcassets */; };
+		932296D217F94EA300EAA096 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296D117F94EA300EAA096 /* XCTest.framework */; };
+		932296D317F94EA300EAA096 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296B217F94EA300EAA096 /* Foundation.framework */; };
+		932296D417F94EA300EAA096 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 932296B617F94EA300EAA096 /* UIKit.framework */; };
+		932296DC17F94EA300EAA096 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 932296DA17F94EA300EAA096 /* InfoPlist.strings */; };
+		932296DE17F94EA300EAA096 /* JoreiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 932296DD17F94EA300EAA096 /* JoreiTests.m */; };
+		932296E817F94F3700EAA096 /* target.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 932296E717F94F3700EAA096 /* target.jpg */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		932296D517F94EA300EAA096 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 932296A717F94EA300EAA096 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 932296AE17F94EA300EAA096;
+			remoteInfo = Jorei;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		932296AF17F94EA300EAA096 /* Jorei.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Jorei.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		932296B217F94EA300EAA096 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		932296B417F94EA300EAA096 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		932296B617F94EA300EAA096 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		932296BA17F94EA300EAA096 /* Jorei-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Jorei-Info.plist"; sourceTree = "<group>"; };
+		932296BC17F94EA300EAA096 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		932296BE17F94EA300EAA096 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		932296C017F94EA300EAA096 /* Jorei-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Jorei-Prefix.pch"; sourceTree = "<group>"; };
+		932296C117F94EA300EAA096 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		932296C217F94EA300EAA096 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		932296C517F94EA300EAA096 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		932296C717F94EA300EAA096 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		932296C817F94EA300EAA096 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		932296CA17F94EA300EAA096 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		932296D017F94EA300EAA096 /* JoreiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JoreiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		932296D117F94EA300EAA096 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		932296D917F94EA300EAA096 /* JoreiTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JoreiTests-Info.plist"; sourceTree = "<group>"; };
+		932296DB17F94EA300EAA096 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		932296DD17F94EA300EAA096 /* JoreiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoreiTests.m; sourceTree = "<group>"; };
+		932296E717F94F3700EAA096 /* target.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = target.jpg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		932296AC17F94EA300EAA096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296B517F94EA300EAA096 /* CoreGraphics.framework in Frameworks */,
+				932296B717F94EA300EAA096 /* UIKit.framework in Frameworks */,
+				932296B317F94EA300EAA096 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		932296CD17F94EA300EAA096 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296D217F94EA300EAA096 /* XCTest.framework in Frameworks */,
+				932296D417F94EA300EAA096 /* UIKit.framework in Frameworks */,
+				932296D317F94EA300EAA096 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		932296A617F94EA300EAA096 = {
+			isa = PBXGroup;
+			children = (
+				932296B817F94EA300EAA096 /* Jorei */,
+				932296D717F94EA300EAA096 /* JoreiTests */,
+				932296B117F94EA300EAA096 /* Frameworks */,
+				932296B017F94EA300EAA096 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		932296B017F94EA300EAA096 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				932296AF17F94EA300EAA096 /* Jorei.app */,
+				932296D017F94EA300EAA096 /* JoreiTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		932296B117F94EA300EAA096 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				932296B217F94EA300EAA096 /* Foundation.framework */,
+				932296B417F94EA300EAA096 /* CoreGraphics.framework */,
+				932296B617F94EA300EAA096 /* UIKit.framework */,
+				932296D117F94EA300EAA096 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		932296B817F94EA300EAA096 /* Jorei */ = {
+			isa = PBXGroup;
+			children = (
+				932296C117F94EA300EAA096 /* AppDelegate.h */,
+				932296C217F94EA300EAA096 /* AppDelegate.m */,
+				932296C417F94EA300EAA096 /* Main.storyboard */,
+				932296C717F94EA300EAA096 /* ViewController.h */,
+				932296C817F94EA300EAA096 /* ViewController.m */,
+				932296CA17F94EA300EAA096 /* Images.xcassets */,
+				932296B917F94EA300EAA096 /* Supporting Files */,
+			);
+			path = Jorei;
+			sourceTree = "<group>";
+		};
+		932296B917F94EA300EAA096 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				932296E717F94F3700EAA096 /* target.jpg */,
+				932296BA17F94EA300EAA096 /* Jorei-Info.plist */,
+				932296BB17F94EA300EAA096 /* InfoPlist.strings */,
+				932296BE17F94EA300EAA096 /* main.m */,
+				932296C017F94EA300EAA096 /* Jorei-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		932296D717F94EA300EAA096 /* JoreiTests */ = {
+			isa = PBXGroup;
+			children = (
+				932296DD17F94EA300EAA096 /* JoreiTests.m */,
+				932296D817F94EA300EAA096 /* Supporting Files */,
+			);
+			path = JoreiTests;
+			sourceTree = "<group>";
+		};
+		932296D817F94EA300EAA096 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				932296D917F94EA300EAA096 /* JoreiTests-Info.plist */,
+				932296DA17F94EA300EAA096 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		932296AE17F94EA300EAA096 /* Jorei */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 932296E117F94EA300EAA096 /* Build configuration list for PBXNativeTarget "Jorei" */;
+			buildPhases = (
+				932296AB17F94EA300EAA096 /* Sources */,
+				932296AC17F94EA300EAA096 /* Frameworks */,
+				932296AD17F94EA300EAA096 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Jorei;
+			productName = Jorei;
+			productReference = 932296AF17F94EA300EAA096 /* Jorei.app */;
+			productType = "com.apple.product-type.application";
+		};
+		932296CF17F94EA300EAA096 /* JoreiTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 932296E417F94EA300EAA096 /* Build configuration list for PBXNativeTarget "JoreiTests" */;
+			buildPhases = (
+				932296CC17F94EA300EAA096 /* Sources */,
+				932296CD17F94EA300EAA096 /* Frameworks */,
+				932296CE17F94EA300EAA096 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				932296D617F94EA300EAA096 /* PBXTargetDependency */,
+			);
+			name = JoreiTests;
+			productName = JoreiTests;
+			productReference = 932296D017F94EA300EAA096 /* JoreiTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		932296A717F94EA300EAA096 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Naoto Yoshioka";
+				TargetAttributes = {
+					932296CF17F94EA300EAA096 = {
+						TestTargetID = 932296AE17F94EA300EAA096;
+					};
+				};
+			};
+			buildConfigurationList = 932296AA17F94EA300EAA096 /* Build configuration list for PBXProject "Jorei" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 932296A617F94EA300EAA096;
+			productRefGroup = 932296B017F94EA300EAA096 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				932296AE17F94EA300EAA096 /* Jorei */,
+				932296CF17F94EA300EAA096 /* JoreiTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		932296AD17F94EA300EAA096 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296CB17F94EA300EAA096 /* Images.xcassets in Resources */,
+				932296BD17F94EA300EAA096 /* InfoPlist.strings in Resources */,
+				932296C617F94EA300EAA096 /* Main.storyboard in Resources */,
+				932296E817F94F3700EAA096 /* target.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		932296CE17F94EA300EAA096 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296DC17F94EA300EAA096 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		932296AB17F94EA300EAA096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296C917F94EA300EAA096 /* ViewController.m in Sources */,
+				932296C317F94EA300EAA096 /* AppDelegate.m in Sources */,
+				932296BF17F94EA300EAA096 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		932296CC17F94EA300EAA096 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				932296DE17F94EA300EAA096 /* JoreiTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		932296D617F94EA300EAA096 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 932296AE17F94EA300EAA096 /* Jorei */;
+			targetProxy = 932296D517F94EA300EAA096 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		932296BB17F94EA300EAA096 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				932296BC17F94EA300EAA096 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		932296C417F94EA300EAA096 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				932296C517F94EA300EAA096 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		932296DA17F94EA300EAA096 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				932296DB17F94EA300EAA096 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		932296DF17F94EA300EAA096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		932296E017F94EA300EAA096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		932296E217F94EA300EAA096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jorei/Jorei-Prefix.pch";
+				INFOPLIST_FILE = "Jorei/Jorei-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		932296E317F94EA300EAA096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jorei/Jorei-Prefix.pch";
+				INFOPLIST_FILE = "Jorei/Jorei-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		932296E517F94EA300EAA096 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jorei.app/Jorei";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jorei/Jorei-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "JoreiTests/JoreiTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		932296E617F94EA300EAA096 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Jorei.app/Jorei";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Jorei/Jorei-Prefix.pch";
+				INFOPLIST_FILE = "JoreiTests/JoreiTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		932296AA17F94EA300EAA096 /* Build configuration list for PBXProject "Jorei" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				932296DF17F94EA300EAA096 /* Debug */,
+				932296E017F94EA300EAA096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		932296E117F94EA300EAA096 /* Build configuration list for PBXNativeTarget "Jorei" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				932296E217F94EA300EAA096 /* Debug */,
+				932296E317F94EA300EAA096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		932296E417F94EA300EAA096 /* Build configuration list for PBXNativeTarget "JoreiTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				932296E517F94EA300EAA096 /* Debug */,
+				932296E617F94EA300EAA096 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 932296A717F94EA300EAA096 /* Project object */;
+}
