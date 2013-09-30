@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "932296AE17F94EA300EAA096"
-               BuildableName = "Jorei.app"
-               BlueprintName = "Jorei"
-               ReferencedContainer = "container:Jorei.xcodeproj">
+               BlueprintIdentifier = "9322965E17F8156500EAA096"
+               BuildableName = "Mukade.app"
+               BlueprintName = "Mukade"
+               ReferencedContainer = "container:Mukade.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "932296CF17F94EA300EAA096"
-               BuildableName = "JoreiTests.xctest"
-               BlueprintName = "JoreiTests"
-               ReferencedContainer = "container:Jorei.xcodeproj">
+               BlueprintIdentifier = "9322967F17F8156600EAA096"
+               BuildableName = "MukadeTests.xctest"
+               BlueprintName = "MukadeTests"
+               ReferencedContainer = "container:Mukade.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "932296AE17F94EA300EAA096"
-            BuildableName = "Jorei.app"
-            BlueprintName = "Jorei"
-            ReferencedContainer = "container:Jorei.xcodeproj">
+            BlueprintIdentifier = "9322965E17F8156500EAA096"
+            BuildableName = "Mukade.app"
+            BlueprintName = "Mukade"
+            ReferencedContainer = "container:Mukade.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "932296AE17F94EA300EAA096"
-            BuildableName = "Jorei.app"
-            BlueprintName = "Jorei"
-            ReferencedContainer = "container:Jorei.xcodeproj">
+            BlueprintIdentifier = "9322965E17F8156500EAA096"
+            BuildableName = "Mukade.app"
+            BlueprintName = "Mukade"
+            ReferencedContainer = "container:Mukade.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "932296AE17F94EA300EAA096"
-            BuildableName = "Jorei.app"
-            BlueprintName = "Jorei"
-            ReferencedContainer = "container:Jorei.xcodeproj">
+            BlueprintIdentifier = "9322965E17F8156500EAA096"
+            BuildableName = "Mukade.app"
+            BlueprintName = "Mukade"
+            ReferencedContainer = "container:Mukade.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

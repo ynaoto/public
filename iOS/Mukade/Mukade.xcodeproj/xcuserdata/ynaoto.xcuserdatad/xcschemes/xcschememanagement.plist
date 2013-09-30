@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Jorei.xcscheme</key>
+		<key>Mukade.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,12 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>932296AE17F94EA300EAA096</key>
+		<key>9322965E17F8156500EAA096</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>932296CF17F94EA300EAA096</key>
+		<key>9322967F17F8156600EAA096</key>
 		<dict>
 			<key>primary</key>
 			<true/>
