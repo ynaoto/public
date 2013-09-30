@@ -22,6 +22,7 @@
 		932296DC17F94EA300EAA096 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 932296DA17F94EA300EAA096 /* InfoPlist.strings */; };
 		932296DE17F94EA300EAA096 /* JoreiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 932296DD17F94EA300EAA096 /* JoreiTests.m */; };
 		932296E817F94F3700EAA096 /* target.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 932296E717F94F3700EAA096 /* target.jpg */; };
+		932296EA17F951B700EAA096 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 932296E917F951B700EAA096 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		932296DB17F94EA300EAA096 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		932296DD17F94EA300EAA096 /* JoreiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JoreiTests.m; sourceTree = "<group>"; };
 		932296E717F94F3700EAA096 /* target.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = target.jpg; sourceTree = "<group>"; };
+		932296E917F951B700EAA096 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		932296B817F94EA300EAA096 /* Jorei */ = {
 			isa = PBXGroup;
 			children = (
+				932296E917F951B700EAA096 /* icon.png */,
 				932296C117F94EA300EAA096 /* AppDelegate.h */,
 				932296C217F94EA300EAA096 /* AppDelegate.m */,
 				932296C417F94EA300EAA096 /* Main.storyboard */,
@@ -232,6 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				932296CB17F94EA300EAA096 /* Images.xcassets in Resources */,
+				932296EA17F951B700EAA096 /* icon.png in Resources */,
 				932296BD17F94EA300EAA096 /* InfoPlist.strings in Resources */,
 				932296C617F94EA300EAA096 /* Main.storyboard in Resources */,
 				932296E817F94F3700EAA096 /* target.jpg in Resources */,
@@ -464,6 +468,7 @@
 				932296E317F94EA300EAA096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		932296E417F94EA300EAA096 /* Build configuration list for PBXNativeTarget "JoreiTests" */ = {
 			isa = XCConfigurationList;
@@ -472,6 +477,7 @@
 				932296E617F94EA300EAA096 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
