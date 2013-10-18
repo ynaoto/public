@@ -1,18 +1,22 @@
 class Bar {
   PVector c;
-  float l;
-  float r;
-  float vr;
+  float l, r, vr;
 
+  Bar(PVector c, float l) {
+    this.c = c;
+    this.l = l;
+  }
+  
   PVector getEndPoint() {
-    float x1 = l * cos(r) + c.x;
-    float y1 = l * sin(r) + c.y;
-    return new PVector(x1, y1);
+    float x = l * cos(r) + c.x;
+    float y = l * sin(r) + c.y;
+    return new PVector(x, y);
   }
 
-  void draw() {
+  PVector draw() {
     PVector e = getEndPoint();
     line(c.x, c.y, e.x, e.y);
+    return e;
   }
 }
 
@@ -22,33 +26,27 @@ void setup() {
   size(640, 640);
   
   snake = new ArrayList<Bar>();
-  PVector lastC = new PVector(width / 2, height / 2);
+  PVector c = new PVector(width / 2, height / 2);
   for (int i = 0; i < 10000; i++) {
-    Bar bar = new Bar();
-    bar.c = lastC;
-    bar.l = 5;
+    Bar bar = new Bar(c, 5);
     bar.r = 0;
-    bar.vr = random(-0.1, 0.1);
+    bar.vr = random(-0.01, 0.01);
     snake.add(bar);
-    lastC = bar.getEndPoint();
+    c = bar.getEndPoint();
   }
   
   background(0);
   stroke(255);
 }
 
-void mousePressed() {
-}
-
 void draw() {
-  fill(0);
-  rect(0, 0, width, height);
+  clear();
   for (int i = 0; i < snake.size(); i++) {
     Bar bar = snake.get(i);
     bar.r += bar.vr;
-    bar.draw();
+    PVector e = bar.draw();
     if (i < snake.size() - 1) {
-      snake.get(i+1).c = bar.getEndPoint();
+      snake.get(i+1).c = e;
     }
   }
 }
