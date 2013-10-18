@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>じゃんけん</title>
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript">
+            var intervalId;
+            var computer;
+
+            function roll()
+            {
+                var img = {
+                    1: 'stone.png', 2: 'cissor.png', 3: 'paper.png',
+                };
+                computer = Math.floor(Math.random() * 3) + 1;
+                $('#computer').attr('src', img[computer])
+                              .attr('alt', img[computer]);
+            }
+            function pong(hand)
+            {
+                clearInterval(intervalId);
+                intervalId = null;
+
+                var msg;
+                if (computer == hand) {
+                    msg = 'あいこ';
+                } else if (computer == 1 && hand == 3
+                || computer == 2 && hand == 1
+                || computer == 3 && hand == 2) {
+                    msg = 'あなたの勝ち！';
+                } else {
+                    msg = 'あなたの負け';
+                }
+                $('#status').text(msg + '(ここをクリックでもう一度)');
+            }
+            function start()
+            {
+                if (intervalId) {
+                    return;
+                }
+                $('#status').text('じゃーんけん');
+                roll();
+                intervalId = setInterval(roll, 100);
+            }
+            $(start);
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="computer" src="stone.png" alt="stone.png"/>
+        </div>
+        <div id="status" onclick="start();"></div>
+        <div>
+            <img src="stone.png" onclick="pong(1)"/>
+            <img src="cissor.png" onclick="pong(2);"/>
+            <img src="paper.png" onclick="pong(3);"/>
+        </div>
+    </body>
+</html>

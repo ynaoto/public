@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Clock</title>
+        <style type="text/css">
+            body {
+                background: black;
+                color: white;
+            }
+        </style>
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript">
+            function neon(id, x)
+            {
+                var img = {
+                    0: '0.png', 1: '1.png', 2: '2.png', 3: '3.png', 4: '4.png',
+                    5: '5.png', 6: '6.png', 7: '7.png', 8: '8.png', 9: '9.png',
+                };
+                var idx = Math.floor(x);
+                $(id).attr('src', img[idx]).attr('alt', img[idx]);
+            }
+            function update()
+            {
+                var date = new Date();
+                var h = date.getHours();
+                var m = date.getMinutes();
+                var s = date.getSeconds();
+                neon('#hour10', h / 10);
+                neon('#hour01', h % 10);
+                neon('#min10', m / 10);
+                neon('#min01', m % 10);
+                neon('#sec10', s / 10);
+                neon('#sec01', s % 10);
+            }
+            function start()
+            {
+                update();
+                setInterval(update, 1000);
+            }
+            $(start);
+        </script>
+    </head>
+    <body>
+        今の時刻は
+        <span id="time">
+            <img id="hour10"/><img id="hour01"/>
+            <img src="colon.png" alt="colon"/>
+            <img id="min10"/><img id="min01"/>
+            <img src="colon.png" alt="colon"/>
+            <img id="sec10"/><img id="sec01"/>
+        </span>です。
+    </body>
+</html>
