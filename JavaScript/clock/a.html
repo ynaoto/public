@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Clock</title>
+        <style type="text/css">
+            body {
+                background: black;
+                color: white;
+            }
+        </style>
+        <script type="text/javascript">
+            function neon(s)
+            {
+                var img = {
+                    0: '0.png', 1: '1.png', 2: '2.png', 3: '3.png', 4: '4.png',
+                    5: '5.png', 6: '6.png', 7: '7.png', 8: '8.png', 9: '9.png',
+                    ':': 'colon.png',
+                };
+                var result = '';
+                var len = s.length;
+                for (var i = 0; i < len; i++) {
+                    var c = s.charAt(i);
+                    result += '<img src="' + img[c] + '" alt="' + c + '"/>';
+                }
+                return result;
+            }
+            function n2(n)
+            {
+                return ('0' + n).slice(-2);
+            }
+            function update()
+            {
+                var elem = document.getElementById("time");
+                var date = new Date();
+                var h = date.getHours();
+                var m = date.getMinutes();
+                var s = date.getSeconds();
+                elem.innerHTML = neon(n2(h) + ':' + n2(m) + ':' + n2(s));
+            }
+            window.onload = function()
+            {
+                update();
+                setInterval(update, 1000);
+            }
+        </script>
+    </head>
+    <body>
+        今の時刻は<span id="time"></span>です。
+    </body>
+</html>

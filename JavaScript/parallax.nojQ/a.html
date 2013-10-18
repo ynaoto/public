@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Parallax</title>
+        <style type="text/css">
+            div,img { position: absolute; }
+            div.a { top:   0px; left: 150px; }
+            div.b { top: 150px; left:   0px; }
+            div.c { top: 150px; left: 300px; }
+        </style>
+        <script type="text/javascript" src="Parallax.js"></script>
+        <script type="text/javascript">
+            function start()
+            {
+                var p = new Parallax(document.body, 100, 100);
+                //window.onmousemove = function(event) { // IE7以前だと動かない
+                document.onmousemove = function(event) {
+                    var ex, ey;
+                    if (!event) { // IE7
+                        var event = window.event;
+                        var doc = document.documentElement;
+                        ex = event.x - doc.clientWidth / 2;
+                        ey = event.y - doc.clientHeight / 2;
+                    } else { // the other moderns
+                        ex = event.pageX - window.innerWidth / 2;
+                        ey = event.pageY - window.innerHeight / 2;
+                    }
+                    p.move(ex, ey);
+                }
+            }
+            window.onload = start;
+        </script>
+    </head>
+    <body>
+        <h1>A test of Parallax</h1>
+        <div class="a">
+            <img src="red.png" alt="red" depth="10"/>
+            <img src="green.png" alt="green" depth="15"/>
+            <img src="blue.png" alt="blue" depth="20"/>
+        </div>
+        <div class="b">
+            <img src="blue.png" alt="blue" depth="10"/>
+            <img src="red.png" alt="red" depth="15"/>
+            <img src="green.png" alt="green" depth="20"/>
+        </div>
+        <div class="c">
+            <img src="green.png" alt="green" depth="10"/>
+            <img src="blue.png" alt="blue" depth="15"/>
+            <img src="red.png" alt="red" depth="20"/>
+        </div>
+    </body>
+</html>
