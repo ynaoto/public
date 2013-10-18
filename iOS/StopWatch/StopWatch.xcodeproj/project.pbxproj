@@ -21,6 +21,7 @@
 		9356E3DA18110D370057951A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9356E3BC18110D370057951A /* UIKit.framework */; };
 		9356E3E218110D370057951A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9356E3E018110D370057951A /* InfoPlist.strings */; };
 		9356E3E418110D370057951A /* StopWatchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9356E3E318110D370057951A /* StopWatchTests.m */; };
+		9356E3EE181110820057951A /* Ping.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 9356E3ED181110820057951A /* Ping.aiff */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		9356E3DF18110D370057951A /* StopWatchTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StopWatchTests-Info.plist"; sourceTree = "<group>"; };
 		9356E3E118110D370057951A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9356E3E318110D370057951A /* StopWatchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StopWatchTests.m; sourceTree = "<group>"; };
+		9356E3ED181110820057951A /* Ping.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = Ping.aiff; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		9356E3BF18110D370057951A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9356E3ED181110820057951A /* Ping.aiff */,
 				9356E3C018110D370057951A /* StopWatch-Info.plist */,
 				9356E3C118110D370057951A /* InfoPlist.strings */,
 				9356E3C418110D370057951A /* main.m */,
@@ -231,6 +234,7 @@
 				9356E3D118110D370057951A /* Images.xcassets in Resources */,
 				9356E3C318110D370057951A /* InfoPlist.strings in Resources */,
 				9356E3CC18110D370057951A /* Main.storyboard in Resources */,
+				9356E3EE181110820057951A /* Ping.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +464,7 @@
 				9356E3E918110D370057951A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9356E3EA18110D370057951A /* Build configuration list for PBXNativeTarget "StopWatchTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +473,7 @@
 				9356E3EC18110D370057951A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
