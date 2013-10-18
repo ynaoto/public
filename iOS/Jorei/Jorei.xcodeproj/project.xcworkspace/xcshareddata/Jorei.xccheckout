@@ -5,16 +5,16 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A7280AD2-539B-40AC-B66A-73C816001CF1</string>
+	<string>08D476D3-91C9-41D9-AB80-431FD7B4A5BD</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Mukade</string>
+	<string>Jorei</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>94CB8B2E-8336-40A1-B704-C376F7DCC091</key>
 		<string>https://github.com/ynaoto/public.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iOS/Mukade/Mukade.xcodeproj/project.xcworkspace</string>
+	<string>iOS/Jorei/Jorei.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>94CB8B2E-8336-40A1-B704-C376F7DCC091</key>
