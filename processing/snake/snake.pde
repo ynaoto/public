@@ -30,8 +30,7 @@ void setup()
   stroke(255);
   snake = new ArrayList<Bar>();
   for (int i = 0; i < 10000; i++) {
-    Bar bar = new Bar(5, random(-0.01, 0.01));
-    snake.add(bar);
+    snake.add(new Bar(5, random(-0.01, 0.01)));
   }
 }
 
