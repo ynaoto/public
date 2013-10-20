@@ -37,12 +37,12 @@ SketchSnakecoffee = (function() {
 
     Bar.name = 'Bar';
 
-    function Bar(cx, cy, l) {
-      this.cx = cx;
-      this.cy = cy;
+    function Bar(l, vr, cx, cy, r) {
       this.l = l;
-      this.r = 0;
-      this.vr = 0;
+      this.vr = vr;
+      this.cx = cx != null ? cx : 0;
+      this.cy = cy != null ? cy : 0;
+      this.r = r != null ? r : 0;
     }
 
     Bar.prototype.getEndPoint = function() {
@@ -63,34 +63,30 @@ SketchSnakecoffee = (function() {
   SketchSnakecoffee.prototype.setup = function() {
     (function(processing){injectProcessingApi(processing);size=function csModeApiInjectIffy (){processing.size.apply(processing,arguments);injectProcessingApi(processing);}})(this);
 
-    var bar, cx, cy, i, _i, _ref, _ref1;
+    var _;
     size(640, 640);
-    this.snake = [];
-    _ref = [width / 2, height / 2], cx = _ref[0], cy = _ref[1];
-    for (i = _i = 0; _i <= 1000; i = ++_i) {
-      bar = new Bar(cx, cy, 5);
-      bar.r = 0;
-      bar.vr = random(-0.01, 0.01);
-      this.snake.push(bar);
-      _ref1 = bar.getEndPoint(), cx = _ref1[0], cy = _ref1[1];
-    }
-    return stroke(255);
+    stroke(255);
+    return this.snake = (function() {
+      var _i, _results;
+      _results = [];
+      for (_ = _i = 1; _i <= 3000; _ = ++_i) {
+        _results.push(new Bar(5, random(-0.01, 0.01)));
+      }
+      return _results;
+    })();
   };
 
   SketchSnakecoffee.prototype.draw = function() {
-    var bar, ex, ey, i, next, _i, _ref, _ref1, _ref2, _results;
+    var bar, cx, cy, _i, _len, _ref, _ref1, _ref2, _ref3, _results;
     background(0);
+    _ref = [width / 2, height / 2], cx = _ref[0], cy = _ref[1];
+    _ref1 = this.snake;
     _results = [];
-    for (i = _i = 0, _ref = this.snake.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
-      bar = this.snake[i];
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      bar = _ref1[_i];
+      _ref2 = [cx, cy], bar.cx = _ref2[0], bar.cy = _ref2[1];
       bar.r += bar.vr;
-      _ref1 = bar.draw(), ex = _ref1[0], ey = _ref1[1];
-      if (i < this.snake.length - 1) {
-        next = this.snake[i + 1];
-        _results.push((_ref2 = [ex, ey], next.cx = _ref2[0], next.cy = _ref2[1], _ref2));
-      } else {
-        _results.push(void 0);
-      }
+      _results.push((_ref3 = bar.draw(), cx = _ref3[0], cy = _ref3[1], _ref3));
     }
     return _results;
   };
