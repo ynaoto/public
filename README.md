@@ -1,7 +1,7 @@
 ## Welcome to my public GitHub repo.
 
-[A](./a.html)
-[Clock](./JavaScript/clock/a.html)
+* [A](./a.html)
+* [Clock](./JavaScript/clock/a.html)
 
 ### [Home](http://ynaoto.github.io/)
 ### [Privacy Policy](http://ynaoto.github.io/policy/)
