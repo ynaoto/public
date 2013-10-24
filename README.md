@@ -1,5 +1,6 @@
 ## Welcome to my public GitHub repo.
 
+[A](./a.html)
 [Clock](./JavaScript/clock/a.html)
 
 ### [Home](http://ynaoto.github.io/)
