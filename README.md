@@ -5,7 +5,7 @@
 * [ジャンケン](./JavaScript/janken/a.html)
 * [ジャンケン/jQuery](./JavaScript/janken/jq.html)
 * [Parallax](./JavaScript/parallax.nojQ/a.html)
-* [Parallax/jQuery](./JavaScript/parallax/jq.html)
+* [Parallax/jQuery](./JavaScript/parallax/a.html)
 
 ### [Home](http://ynaoto.github.io/)
 ### [Privacy Policy](http://ynaoto.github.io/policy/)
