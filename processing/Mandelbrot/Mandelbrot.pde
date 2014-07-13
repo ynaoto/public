@@ -1,3 +1,5 @@
+import java.util.concurrent.*;
+
 PVector p0start = new PVector(-2.5, -1);
 PVector p1start = new PVector(1, 1);
 
@@ -16,26 +18,57 @@ void setup() {
 }
 
 void draw() {
+  /*
   for (int py = 0; py < height; py++) {
-    for (int px = 0; px < width; px++) {
-      PVector p0 = PVector.lerp(p0start, p0end, 1-t);
-      PVector p1 = PVector.lerp(p1start, p1end, 1-t);
-      float x0 = map(px, 0, width, p0.x, p1.x);
-      float y0 = map(py, height, 0, p0.y, p1.y);
-      float x = 0, y = 0;
-      int itr;
-      for (itr = 0; itr < max_iteration; itr++) {
-        float x2 = x*x, y2 = y*y;
-        if (4 < x2 + y2) {
-          break;
+   for (int px = 0; px < width; px++) {
+   PVector p0 = PVector.lerp(p0start, p0end, 1-t);
+   PVector p1 = PVector.lerp(p1start, p1end, 1-t);
+   float x0 = map(px, 0, width, p0.x, p1.x);
+   float y0 = map(py, height, 0, p0.y, p1.y);
+   float x = 0, y = 0;
+   int itr;
+   for (itr = 0; itr < max_iteration; itr++) {
+   float x2 = x*x, y2 = y*y;
+   if (4 < x2 + y2) {
+   break;
+   }
+   float xy = x*y;
+   x = x2 - y2 + x0;
+   y = 2*xy + y0;
+   }
+   pixels[py*width + px] = color(itr, 1, 1);
+   }
+   }
+   */
+  ForkJoinPool pool = new ForkJoinPool();
+  for (int ppy = 0; ppy < height; ppy++) {
+    final int py = ppy;
+    pool.submit(new Runnable() {
+      @Override
+        public void run() {
+        for (int px = 0; px < width; px++) {
+          PVector p0 = PVector.lerp(p0start, p0end, 1-t);
+          PVector p1 = PVector.lerp(p1start, p1end, 1-t);
+          float x0 = map(px, 0, width, p0.x, p1.x);
+          float y0 = map(py, height, 0, p0.y, p1.y);
+          float x = 0, y = 0;
+          int itr;
+          for (itr = 0; itr < max_iteration; itr++) {
+            float x2 = x*x, y2 = y*y;
+            if (4 < x2 + y2) {
+              break;
+            }
+            float xy = x*y;
+            x = x2 - y2 + x0;
+            y = 2*xy + y0;
+          }
+          pixels[py*width + px] = color(itr, 1, 1);
         }
-        float xy = x*y;
-        x = x2 - y2 + x0;
-        y = 2*xy + y0;
       }
-      pixels[py*width + px] = color(itr, 1, 1);
-    }
+    });
   }
+  pool.shutdown();
+  pool.awaitTermination(10, TimeUnit.SECONDS);
   updatePixels();
   t *= 0.9;
 }
