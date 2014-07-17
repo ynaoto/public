@@ -18,18 +18,20 @@ void setup() {
 }
 
 void draw() {
-  background(255);
+  fill(0, 0, 255, 10);
+  rect(0, 0, width, height);
   int n = handles.size();
   for (float t = 0; t <= 1; t += 0.01) {
     float x = 0, y = 0;
     for (int i = 0; i < n; i++) {
       Handle h = handles.get(i);
-      h.draw();
       float b = B(n-1, i, t);
       x += b*h.x;
       y += b*h.y;
     }
+    fill(map(t, 0, 1, 0, 255), 255, 255);
     ellipse(x, y, 10, 10);
   }
+  draw_handles();
 }
 

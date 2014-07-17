@@ -4,8 +4,21 @@ void init_handles(int n) {
   for (int i = 0; i < n; i++) {
     float x = random(width);
     float y = random(height);
-    color c = color(map(i, 0, n, 0, 256), 255, 255);
+    color c = color(map(i, 0, n-1, 0, 255), 255, 255);
     handles.add(new Handle(x, y, c));
+  }
+}
+
+void draw_handles() {
+  Handle lastH = null;
+  int n = handles.size();
+  for (int i = 0; i < n; i++) {
+    Handle h = handles.get(i);
+    h.draw();
+    if (lastH != null) {
+      line(lastH.x, lastH.y, h.x, h.y);
+    }
+    lastH = h;
   }
 }
 
