@@ -1,13 +1,10 @@
-float[] tt = { 0, 1, 2, 3, 4 };
+float[] tt = { 0, 0.25, 0.5, 0.75, 1 };
 
 float L(int n, int i, float t) {
   float a = 1, b = 1;
   for (int j = 0; j <= n; j++) {
     if (j == i) continue;
     a *= t - tt[j];
-  }
-  for (int j = 0; j <= n; j++) {
-    if (j == i) continue;
     b *= tt[i] - tt[j];
   }
   return a/b;
