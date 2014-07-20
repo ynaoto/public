@@ -34,6 +34,14 @@ void walk(int x, int y) {
 float x0, x, y0, y, r0, r;
 float vy, ay;
 
+void reset() {
+  x = x0;
+  y = y0;
+  r = r0;
+  vy = 0;
+  ay = 0;
+}
+
 void setup() {
   size(300, 300);
   colorMode(HSB, 360, 1, 1);
@@ -41,11 +49,10 @@ void setup() {
   background(0);
   a = new float[width*height];
   th = 0.47;
-  x0 = x = width/2;
-  y0 = y = 2*height/3;
-  r0 = r = 5;
-  vy = 0;
-  ay = 0;
+  x0 = width/2;
+  y0 = 2*height/3;
+  r0 = 5;
+  reset();
 }
 
 void draw() {
@@ -89,8 +96,5 @@ void draw() {
 }
 
 void mousePressed() {
-  vy = 0;
-  ay = 0;
-  y = y0;
-  r = r0;
+  reset();
 }
