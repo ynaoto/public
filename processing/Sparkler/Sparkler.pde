@@ -1,35 +1,38 @@
 float[] a;
+float th;
 
-void walk(int startX, int startY) {
-  float th = 0.47;
-  int idx = startY*width + startX;
+void walk(int x, int y) {
+  int idx = y*width + x;
   pixels[idx] = color(map(a[idx], th, 1, 0, 30), 1, 1);
   a[idx] = -1;
-  if (0 < startX) { // left
-    idx = startY*width + startX - 1;
+  if (0 < x) { // left
+    idx = y*width + x - 1;
     if (th < a[idx]) {
-      walk(startX-1, startY);
+      walk(x-1, y);
     }
   }
-  if (startX < width-1) { // right
-    idx = startY*width + startX + 1;
+  if (x < width-1) { // right
+    idx = y*width + x + 1;
     if (th < a[idx]) {
-      walk(startX+1, startY);
+      walk(x+1, y);
     }
   }
-  if (0 < startY) { // up
-    idx = (startY - 1)*width + startX;
+  if (0 < y) { // up
+    idx = (y - 1)*width + x;
     if (th < a[idx]) {
-      walk(startX, startY-1);
+      walk(x, y-1);
     }
   }
-  if (startY < height-1) { // down
-    idx = (startY + 1)*width + startX;
+  if (y < height-1) { // down
+    idx = (y + 1)*width + x;
     if (th < a[idx]) {
-      walk(startX, startY+1);
+      walk(x, y+1);
     }
   }
 }
+
+float x0, x, y0, y, r0, r;
+float vy, ay;
 
 void setup() {
   size(300, 300);
@@ -37,6 +40,12 @@ void setup() {
   frameRate(20);
   background(0);
   a = new float[width*height];
+  th = 0.47;
+  x0 = x = width/2;
+  y0 = y = 2*height/3;
+  r0 = r = 5;
+  vy = 0;
+  ay = 0;
 }
 
 void draw() {
@@ -44,18 +53,44 @@ void draw() {
   noStroke();
   rect(0, 0, width, height);
 //  background(0);
+
+  x = 5*sin(10*r) + x0;
+  
   strokeWeight(3);
   stroke(50, 1, 1);
-  line(width/2, 0, width/2, 2*height/3);
+  line(x0, 0, x, y0);
+
+  if (ay == 0) {
+    r += 0.01;
+  }
+  
   noStroke();
   fill(10, 1, 1);
-  ellipse(width/2, 2*height/3, 10, 10);
-  loadPixels();
-  for (int i = 0; i < width*height; i++) {
-    a[i] = random(0, 1);
+  ellipse(x, y, 2*r, 2*r);
+
+  if (10 < random(0, r)) {
+    ay = 3;
   }
-  walk(width/2, 2*height/3);
+  
+  loadPixels();
+  if (y < height) {  
+    for (int i = 0; i < width*height; i++) {
+      a[i] = random(0, 1);
+    }
+    walk((int)x, (int)y);
+  }
   updatePixels();
 //  filter(BLUR);
+
+  if (y < height + 100) {
+    vy += ay;
+    y += vy;
+  }
 }
 
+void mousePressed() {
+  vy = 0;
+  ay = 0;
+  y = y0;
+  r = r0;
+}
