@@ -39,7 +39,7 @@ class Entity {
       yy[0] = y;
       for (int i = 1; i < tt.length; i++) {
         xx[i] = random(width);
-        yy[i] = random(width);
+        yy[i] = random(height);
       } 
     }
     if (state == FLYING) {
