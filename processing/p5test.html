@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>p5 test</title>
+<script src="https://github.com/lmccart/p5.js/releases/download/0.3.2/p5.min.js"></script>
+<script>
+var Ball = function() {
+  this.x = random(0, width-1);
+  this.y = random(0, height-1);
+  this.vx = this.vy = 0;
+  this.draw = function() {
+    var v = mag(this.vx, this.vy);
+    fill(map(v, 0, 5, 0, 0.8), 1, 1, 0.5);
+    ellipse(this.x, this.y, 10, 10);
+  }
+};
+
+var balls = [];
+var cx, cy;
+
+function setup() {
+  createCanvas(640, 480);
+  colorMode(HSB, 1, 1, 1, 1);
+  noStroke();
+  for (var i = 0; i < 2000; i++) {
+    balls.push(new Ball());
+  }
+  cx = width/2;
+  cy = height/2;
+}
+
+function draw() {
+  fill(0, 0, 0, 0.3);
+  rect(0, 0, width, height);
+  balls.forEach(function(ball) {
+    ball.draw();
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    var dx = cx - ball.x;
+    var dy = cy - ball.y;
+    var d2 = dx*dx + dy*dy;
+    ball.vx += 1.2*dx/d2;
+    ball.vy += 1.2*dy/d2;
+  });
+}
+
+function mousePressed() {
+  cx = mouseX;
+  cy = mouseY;
+}
+</script>
