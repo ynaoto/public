@@ -36,10 +36,15 @@ getnum(FILE *fp, char *buf, int buf_size)
 {
   int c;
   int i = 0;
-  while (i < buf_size - 1 && (c = fgetc(fp)) != EOF && isdigit(c))
-    buf[i++] = c;
+  while (i < buf_size - 1) {
+    if ((c = fgetc(fp)) != EOF && isdigit(c)) {
+      buf[i++] = c;
+    } else {
+      ungetc(c, fp);
+      break;
+    }
+  }
   buf[i] = '\0';
-  ungetc(c, fp);
 }
 
 static Tok
