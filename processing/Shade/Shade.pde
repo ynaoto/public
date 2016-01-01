@@ -1,13 +1,4 @@
-PVector L;
-
-void setup() {
-  size(300, 300);
-  colorMode(HSB, 1, 1, 1);
-  background(0);
-  L = new PVector(1, 1, 1);
-}
-
-float ray(PVector from, PVector to) {
+float ray(PVector from, PVector to, PVector L) {
   /*
   x^2+y^2+z^2 = r^2
   (x, y, z) = from + t(to - from)
@@ -21,10 +12,10 @@ float ray(PVector from, PVector to) {
     + Px^2+Py^2+Pz^2
   = (|Q|^2)t^2 + 2(P・Q)t + |P|^2
   (|Q|^2)t^2 + 2(P・Q)t + (|P|^2-r^2) = 0
-  t = -b±sqrt(b^2-4ac)/2a
+  t = (-b±sqrt(b^2-4ac))/2a
   */
   float r = 1;
-  PVector P = from.get();
+  PVector P = from;
   PVector Q = PVector.sub(to, from);
   float a = Q.magSq();
   float b = 2*P.dot(Q);
@@ -40,8 +31,13 @@ float ray(PVector from, PVector to) {
   float z = P.z + t*Q.z;
   
   PVector N = new PVector(x, y, z);
-  N.normalize(); 
+  N.normalize();
   return L.dot(N);
+}
+
+void setup() {
+  size(300, 300);
+  background(0);
 }
 
 void drawPoint() {
@@ -51,12 +47,12 @@ void drawPoint() {
   float y = map(py, 0, height, 1, -1);
   PVector from = new PVector(0, 0, -100);
   PVector to = new PVector(x, y, -10);
-  L = new PVector(map(mouseX, 0, width, -1, 1),
-                  map(mouseY, 0, height, 1, -1),
-                  -1);
+  PVector L = new PVector(map(mouseX, 0, width, -1, 1),
+                          map(mouseY, 0, height, 1, -1),
+                          -1);
   L.normalize();
-  float b = ray(from, to);
-  stroke(0, 0, b);
+  float b = ray(from, to, L);
+  stroke(255*b);
   point(px, py);
 }
 
@@ -66,4 +62,3 @@ void draw() {
     drawPoint();
   }
 }
-
