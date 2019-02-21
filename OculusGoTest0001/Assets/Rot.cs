@@ -13,6 +13,9 @@ public class Rot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0.5f, 0);
+        var x = transform.position.x;
+        var y = transform.position.y;
+        var z = transform.position.z;
+        transform.Rotate(1.0f*x, 1.0f*y, 1.0f*z);
     }
 }
