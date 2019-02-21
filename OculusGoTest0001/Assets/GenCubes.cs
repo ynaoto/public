@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GenCubes : MonoBehaviour
 {
     public Transform prefab;
+    public Text text;
     List<Transform> instances = new List<Transform>();
 
     void addCube()
@@ -46,11 +48,12 @@ public class GenCubes : MonoBehaviour
         {
             delCube();
         }
+
         string s = "";
-        s += "dt: " + (1000*dt) + "ms";
-        s += "; quality: " + QualitySettings.GetQualityLevel();
-        s += "; instacnes: " + instances.Count;
-        s += "; objects: " + transform.childCount;
-        Debug.Log(s);
+        s += $"QualityLevel: {QualitySettings.GetQualityLevel()}";
+        s += "\n";
+        s += $"{1000*dt:F1} ms; ";
+        s += $"{instances.Count} instances";
+        text.text = s;
     }
 }
