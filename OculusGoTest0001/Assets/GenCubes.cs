@@ -50,7 +50,8 @@ public class GenCubes : MonoBehaviour
         }
 
         string s = "";
-        s += $"QualityLevel: {QualitySettings.GetQualityLevel()}";
+        var ql = QualitySettings.GetQualityLevel();
+        s += $"Quality: {QualitySettings.names[ql]}";
         s += "\n";
         s += $"{1000*dt:F1} ms; ";
         s += $"{instances.Count} instances";
