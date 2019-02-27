@@ -7,6 +7,7 @@ public class GenCubes : MonoBehaviour
 {
     public Transform prefab;
     public Text text;
+    public TextMesh textMesh;
     List<Transform> instances = new List<Transform>();
 
     void addCube()
@@ -39,6 +40,13 @@ public class GenCubes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        //Debug.Log("XXXXXX " + c);
+        var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
+        var r = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote);
+        textMesh.transform.localPosition = p;
+        textMesh.transform.localRotation = r;
+
         var dt = Time.deltaTime;
         if (1000 * dt < 32)
         {
