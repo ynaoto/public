@@ -7,7 +7,7 @@ public class GenCubes : MonoBehaviour
 {
     public Transform prefab;
     public Text text;
-    public TextMesh textMesh;
+    public Transform controllerIcon;
     List<Transform> instances = new List<Transform>();
 
     void addCube()
@@ -44,8 +44,7 @@ public class GenCubes : MonoBehaviour
         //Debug.Log("XXXXXX " + c);
         var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
         var r = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote);
-        textMesh.transform.localPosition = p;
-        textMesh.transform.localRotation = r;
+        controllerIcon.SetPositionAndRotation(p, r);
 
         var dt = Time.deltaTime;
         if (1000 * dt < 32)
