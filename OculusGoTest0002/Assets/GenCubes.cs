@@ -66,6 +66,12 @@ public class GenCubes : MonoBehaviour
             delCube();
         }
 
+        var lastP = goalIcon.position;
+        foreach (var o in instances) {
+            o.position += 0.1f*(lastP - o.position);
+            lastP = o.position;
+        }
+
         string s = "";
         var ql = QualitySettings.GetQualityLevel();
         s += $"Quality: {QualitySettings.names[ql]}";
