@@ -44,7 +44,9 @@ public class GenCubes : MonoBehaviour
         //Debug.Log("XXXXXX " + c);
         var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
         var r = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote);
-        controllerIcon.SetPositionAndRotation(p, r);
+        //controllerIcon.SetPositionAndRotation(p, r);
+        //controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
+        controllerIcon.localRotation = r;
 
         var dt = Time.deltaTime;
         if (1000 * dt < 32)
