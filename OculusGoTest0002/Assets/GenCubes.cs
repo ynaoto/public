@@ -8,6 +8,7 @@ public class GenCubes : MonoBehaviour
     public Transform prefab;
     public Text text;
     public Transform controllerIcon;
+    public Transform goalIcon;
     List<Transform> instances = new List<Transform>();
 
     void addCube()
@@ -45,8 +46,15 @@ public class GenCubes : MonoBehaviour
         var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
         var r = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote);
         //controllerIcon.SetPositionAndRotation(p, r);
-        //controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
+        controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
         controllerIcon.localRotation = r;
+
+        RaycastHit hit;
+        Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
+        int layerMask = 1 << 31;
+        if (Physics.Raycast(controllerIcon.position, dir, out hit, Mathf.Infinity, layerMask)) {
+            goalIcon.position = hit.point;
+        }
 
         var dt = Time.deltaTime;
         if (1000 * dt < 32)
