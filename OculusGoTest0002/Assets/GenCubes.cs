@@ -38,9 +38,26 @@ public class GenCubes : MonoBehaviour
 
     }
 
+    #if UNITY_EDITOR
+    Vector3? prevMousePosition = null;
+    #endif
+
     // Update is called once per frame
     void Update()
     {
+    #if UNITY_EDITOR
+        if (Input.GetMouseButton(0)) {
+            var p = Input.mousePosition;
+            if (prevMousePosition == null) {
+                prevMousePosition = p;
+            }
+            var d = p - prevMousePosition;
+            controllerIcon.Rotate(-d.Value.y, d.Value.x, 0.0f);
+            prevMousePosition = p;
+        } else {
+            prevMousePosition = null;
+        }
+    #else   
         var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
         //Debug.Log("XXXXXX " + c);
         var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
@@ -48,6 +65,7 @@ public class GenCubes : MonoBehaviour
         //controllerIcon.SetPositionAndRotation(p, r);
         controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
         controllerIcon.localRotation = r;
+    #endif   
 
         RaycastHit hit;
         Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
