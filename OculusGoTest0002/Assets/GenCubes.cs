@@ -16,13 +16,39 @@ public class GenCubes : MonoBehaviour
     public Transform goalIcon;
     List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
 
-    void addCube()
+    List<Transform> instanceCashe = new List<Transform>();
+    Transform getInstanceFromCache()
     {
+        Transform o = null;
         var r = 3.0f;
         var x = Random.Range(-r, r);
         var y = Random.Range(-r, r);
         var z = 0.0f;
-        var o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
+
+        if (0 < instanceCashe.Count)
+        {
+            o = instanceCashe[0];
+            instanceCashe.RemoveAt(0);
+            o.position = new Vector3(x, y, z);
+            o.gameObject.SetActive(true);
+        }
+        else
+        {
+            o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
+        }
+
+        return o;
+    }
+    void returnInstanceToCache(Transform o)
+    {
+        //Destroy(o.gameObject);
+        o.gameObject.SetActive(false);
+        instanceCashe.Add(o);
+    }
+
+    void addCube()
+    {
+        var o = getInstanceFromCache();
         instances.Add(o);
     }
 
@@ -30,9 +56,12 @@ public class GenCubes : MonoBehaviour
     {
         if (0 < instances.Count)
         {
-            var o = instances[0];
-            Destroy(o.gameObject);
-            instances.RemoveAt(0);
+            // var o = instances[0];
+            // instances.RemoveAt(0);
+            var i = instances.Count - 1;
+            var o = instances[i];
+            instances.RemoveAt(i);
+            returnInstanceToCache(o);
         }
     }
 
@@ -119,6 +148,7 @@ public class GenCubes : MonoBehaviour
         foreach (var o in instances)
         {
             o.position = Vector3.Lerp(o.position, goal, 0.1f);
+            o.LookAt(goal);
             goal = o.position;
         }
 
