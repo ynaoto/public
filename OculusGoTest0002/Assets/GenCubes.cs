@@ -1,5 +1,4 @@
-﻿//#define NO_DESTROY
-#if UNITY_ANDROID && !UNITY_STANDALONE && !UNITY_EDITOR
+﻿#if UNITY_ANDROID && !UNITY_STANDALONE && !UNITY_EDITOR
 #define IS_OCULUS
 #endif
 
@@ -15,66 +14,32 @@ public class GenCubes : MonoBehaviour
     public Text text;
     public Transform controllerIcon;
     public Transform goalIcon;
-    List<Transform> instances;
-#if NO_DESTROY
-    int numActivated;
-#endif
-
-    void initCubes()
-    {
-        instances = new List<Transform>(10000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
-#if NO_DESTROY
-        for (var i = 0; i < instances.Capacity; i++) {
-            var r = 3.0f;
-            var x = Random.Range(-r, r);
-            var y = Random.Range(-r, r);
-            var z = 0.0f;
-            var o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
-            o.gameObject.SetActive(false);
-            instances.Add(o);
-        }
-        numActivated = 0;
-#endif
-    }
+    List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
 
     void addCube()
     {
-#if NO_DESTROY
-        var o = instances[numActivated];
-        o.gameObject.SetActive(true);
-        numActivated++;
-#else
         var r = 3.0f;
         var x = Random.Range(-r, r);
         var y = Random.Range(-r, r);
         var z = 0.0f;
         var o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
         instances.Add(o);
-#endif
     }
 
     void delCube()
     {
-#if NO_DESTROY
-        if (0 <= numActivated)
-        {
-            var o = instances[numActivated - 1];
-            o.gameObject.SetActive(false);
-        }
-#else
         if (0 < instances.Count)
         {
             var o = instances[0];
             Destroy(o.gameObject);
             instances.RemoveAt(0);
         }
-#endif
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        initCubes();
+
     }
 
 #if !IS_OCULUS
@@ -86,7 +51,7 @@ public class GenCubes : MonoBehaviour
     {
 #if IS_OCULUS
         var controller = OVRInput.Controller.RTrackedRemote;
-        var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        //var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
         //Debug.Log("XXXXXX " + c);
         var p = OVRInput.GetLocalControllerPosition(controller);
         var r = OVRInput.GetLocalControllerRotation(controller);
@@ -128,7 +93,7 @@ public class GenCubes : MonoBehaviour
         if (dt < 1.0f / 30)  // まだ余裕
         {
             var n = 1;
-            if (dt < 1.0f / 40)
+            if (dt < 1.0f / 40)  // 超余裕
             {
                 n = 10;
             }
@@ -140,7 +105,7 @@ public class GenCubes : MonoBehaviour
         else if (1.0f / 20 < dt)  // ちょっときつい
         {
             var n = 1;
-            if (1.0f / 15 < dt)
+            if (1.0f / 15 < dt)  // もう無理
             {
                 n = 10;
             }
@@ -151,29 +116,15 @@ public class GenCubes : MonoBehaviour
         }
 
         var goal = goalIcon.position;
-#if NO_DESTROY
-        for (var i = 0; i < numActivated; i++) {
-            var o = instances[i];
-            o.position = Vector3.Lerp(o.position, goal, 0.1f);
-            goal = o.position;
-        }
-#else
         foreach (var o in instances)
         {
             o.position = Vector3.Lerp(o.position, goal, 0.1f);
             goal = o.position;
         }
-#endif
 
         var ql = QualitySettings.GetQualityLevel();
-#if NO_DESTROY
-        text.text = $"Quality: {QualitySettings.names[ql]}\n"
-            + $"{1000 * dt:F1} ms; "
-            + $"{numActivated} activated";
-#else
         text.text = $"Quality: {QualitySettings.names[ql]}\n"
             + $"{1000 * dt:F1} ms; "
             + $"{instances.Count} instances";
-#endif
     }
 }
