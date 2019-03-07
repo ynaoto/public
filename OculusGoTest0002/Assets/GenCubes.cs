@@ -1,4 +1,7 @@
 ﻿//#define NO_DESTROY
+#if UNITY_ANDROID && !UNITY_STANDALONE && !UNITY_EDITOR
+#define IS_OCULUS
+#endif
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,9 +22,9 @@ public class GenCubes : MonoBehaviour
 
     void initCubes()
     {
-        instances = new List<Transform>(1000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
-    #if NO_DESTROY
-        for (var i = 0; i < 1000; i++) {
+        instances = new List<Transform>(10000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
+#if NO_DESTROY
+        for (var i = 0; i < instances.Capacity; i++) {
             var r = 3.0f;
             var x = Random.Range(-r, r);
             var y = Random.Range(-r, r);
@@ -31,41 +34,41 @@ public class GenCubes : MonoBehaviour
             instances.Add(o);
         }
         numActivated = 0;
-    #endif
+#endif
     }
 
     void addCube()
     {
-    #if NO_DESTROY
+#if NO_DESTROY
         var o = instances[numActivated];
         o.gameObject.SetActive(true);
         numActivated++;
-    #else
+#else
         var r = 3.0f;
         var x = Random.Range(-r, r);
         var y = Random.Range(-r, r);
         var z = 0.0f;
         var o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
         instances.Add(o);
-    #endif
+#endif
     }
 
     void delCube()
     {
-    #if NO_DESTROY
+#if NO_DESTROY
         if (0 <= numActivated)
         {
             var o = instances[numActivated - 1];
             o.gameObject.SetActive(false);
         }
-    #else
-        if (0 <= instances.Count)
+#else
+        if (0 < instances.Count)
         {
             var o = instances[0];
             Destroy(o.gameObject);
             instances.RemoveAt(0);
         }
-    #endif
+#endif
     }
 
     // Start is called before the first frame update
@@ -74,34 +77,39 @@ public class GenCubes : MonoBehaviour
         initCubes();
     }
 
-    #if UNITY_EDITOR
+#if !IS_OCULUS
     Vector3? prevMousePosition = null;
-    #endif
+#endif
 
     // Update is called once per frame
     void Update()
     {
-    #if UNITY_EDITOR
-        if (Input.GetMouseButton(0)) {
+#if IS_OCULUS
+        var controller = OVRInput.Controller.RTrackedRemote;
+        var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        //Debug.Log("XXXXXX " + c);
+        var p = OVRInput.GetLocalControllerPosition(controller);
+        var r = OVRInput.GetLocalControllerRotation(controller);
+        //controllerIcon.SetPositionAndRotation(p, r);
+        controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
+        controllerIcon.localRotation = r;
+#else
+        if (Input.GetMouseButton(0))
+        {
             var p = Input.mousePosition;
-            if (prevMousePosition == null) {
+            if (prevMousePosition == null)
+            {
                 prevMousePosition = p;
             }
             var d = p - prevMousePosition;
             controllerIcon.Rotate(-d.Value.y, d.Value.x, 0.0f);
             prevMousePosition = p;
-        } else {
+        }
+        else
+        {
             prevMousePosition = null;
         }
-    #else   
-        var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
-        //Debug.Log("XXXXXX " + c);
-        var p = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTrackedRemote);
-        var r = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTrackedRemote);
-        //controllerIcon.SetPositionAndRotation(p, r);
-        controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
-        controllerIcon.localRotation = r;
-    #endif   
+#endif
 
         RaycastHit hit;
         Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
@@ -111,43 +119,61 @@ public class GenCubes : MonoBehaviour
         var maxDistance = Mathf.Infinity;
         //var maxDistance = 10.0f;
 
-        if (Physics.Raycast(controllerIcon.position, dir, out hit, maxDistance, layerMask)) {
+        if (Physics.Raycast(controllerIcon.position, dir, out hit, maxDistance, layerMask))
+        {
             goalIcon.position = hit.point;
         }
 
         var dt = Time.deltaTime;
-        if (dt < 1.0f/30)  // まだ余裕
+        if (dt < 1.0f / 30)  // まだ余裕
         {
-            addCube();
+            var n = 1;
+            if (dt < 1.0f / 40)
+            {
+                n = 10;
+            }
+            for (var i = 0; i < n; i++)
+            {
+                addCube();
+            }
         }
-        else if (1.0f/15 < dt)  // ちょっときつすぎる
+        else if (1.0f / 20 < dt)  // ちょっときつい
         {
-            delCube();
+            var n = 1;
+            if (1.0f / 15 < dt)
+            {
+                n = 10;
+            }
+            for (var i = 0; i < n; i++)
+            {
+                delCube();
+            }
         }
 
         var goal = goalIcon.position;
-    #if NO_DESTROY
+#if NO_DESTROY
         for (var i = 0; i < numActivated; i++) {
             var o = instances[i];
             o.position = Vector3.Lerp(o.position, goal, 0.1f);
             goal = o.position;
         }
-    #else
-        foreach (var o in instances) {
+#else
+        foreach (var o in instances)
+        {
             o.position = Vector3.Lerp(o.position, goal, 0.1f);
             goal = o.position;
         }
-    #endif
+#endif
 
         var ql = QualitySettings.GetQualityLevel();
-    #if NO_DESTROY
+#if NO_DESTROY
         text.text = $"Quality: {QualitySettings.names[ql]}\n"
             + $"{1000 * dt:F1} ms; "
             + $"{numActivated} activated";
-    #else
+#else
         text.text = $"Quality: {QualitySettings.names[ql]}\n"
             + $"{1000 * dt:F1} ms; "
             + $"{instances.Count} instances";
-    #endif
+#endif
     }
 }
