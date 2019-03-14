@@ -11,13 +11,15 @@ using UnityEngine.Profiling;
 public class GenCubes : MonoBehaviour
 {
     public Transform prefab;
+    public Transform prefab2;
     public Text text;
     public Transform controllerIcon;
     public Transform goalIcon;
-    List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
+    //List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
+    List<Transform> instances = new List<Transform>();
 
     List<Transform> instanceCashe = new List<Transform>();
-    Transform getInstanceFromCache()
+    Transform getInstanceFromCashe()
     {
         Transform o = null;
         var r = 3.0f;
@@ -35,11 +37,12 @@ public class GenCubes : MonoBehaviour
         else
         {
             o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
+            // o = GameObject.Instantiate(prefab2, new Vector3(x, y, z), Quaternion.identity, transform);
         }
 
         return o;
     }
-    void returnInstanceToCache(Transform o)
+    void returnInstanceToCashe(Transform o)
     {
         //Destroy(o.gameObject);
         o.gameObject.SetActive(false);
@@ -48,7 +51,7 @@ public class GenCubes : MonoBehaviour
 
     void addCube()
     {
-        var o = getInstanceFromCache();
+        var o = getInstanceFromCashe();
         instances.Add(o);
     }
 
@@ -61,14 +64,15 @@ public class GenCubes : MonoBehaviour
             var i = instances.Count - 1;
             var o = instances[i];
             instances.RemoveAt(i);
-            returnInstanceToCache(o);
+            returnInstanceToCashe(o);
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        Debug.Log("********" + transform.hierarchyCapacity);
+        //transform.hierarchyCapacity = 1000;
     }
 
 #if !IS_OCULUS
