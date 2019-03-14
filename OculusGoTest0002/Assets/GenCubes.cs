@@ -10,18 +10,19 @@ using UnityEngine.Profiling;
 
 public class GenCubes : MonoBehaviour
 {
-    public Transform prefab;
+    //public Transform prefab;
+    public Rigidbody prefab;
     public Transform prefab2;
     public Text text;
     public Transform controllerIcon;
     public Transform goalIcon;
     //List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
-    List<Transform> instances = new List<Transform>();
+    List<Rigidbody> instances = new List<Rigidbody>();
 
-    List<Transform> instanceCashe = new List<Transform>();
-    Transform getInstanceFromCashe()
+    List<Rigidbody> instanceCashe = new List<Rigidbody>();
+    Rigidbody getInstanceFromCashe()
     {
-        Transform o = null;
+        Rigidbody o = null;
         var r = 3.0f;
         var x = Random.Range(-r, r);
         var y = Random.Range(-r, r);
@@ -36,13 +37,14 @@ public class GenCubes : MonoBehaviour
         }
         else
         {
-            o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
+            //o = GameObject.Instantiate(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
+            o = GameObject.Instantiate<Rigidbody>(prefab, new Vector3(x, y, z), Quaternion.identity, transform);
             // o = GameObject.Instantiate(prefab2, new Vector3(x, y, z), Quaternion.identity, transform);
         }
 
         return o;
     }
-    void returnInstanceToCashe(Transform o)
+    void returnInstanceToCashe(Rigidbody o)
     {
         //Destroy(o.gameObject);
         o.gameObject.SetActive(false);
@@ -151,9 +153,12 @@ public class GenCubes : MonoBehaviour
         var goal = goalIcon.position;
         foreach (var o in instances)
         {
-            o.position = Vector3.Lerp(o.position, goal, 0.1f);
-            o.LookAt(goal);
-            goal = o.position;
+            o.transform.LookAt(goal);
+            //o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Acceleration);
+            o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
+            //o.AddRelativeForce(0.03f*Vector3.forward, ForceMode.Impulse);
+            //o.AddRelativeForce(0.05f*Vector3.forward, ForceMode.VelocityChange);
+            //goal = o.position;
         }
 
         var ql = QualitySettings.GetQualityLevel();
