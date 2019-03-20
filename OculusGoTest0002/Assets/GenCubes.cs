@@ -16,6 +16,9 @@ public class GenCubes : MonoBehaviour
     public Text text;
     public Transform controllerIcon;
     public Transform goalIcon;
+    public Rigidbody attractor;
+    public Rigidbody antiAttractor;
+
     //List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
     List<Rigidbody> instances = new List<Rigidbody>();
 
@@ -84,10 +87,18 @@ public class GenCubes : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var shootAttractor = false;
+        var shootAntiAttractor = false;
 #if IS_OCULUS
         var controller = OVRInput.Controller.RTrackedRemote;
-        //var c = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
-        //Debug.Log("XXXXXX " + c);
+
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, controller)) {
+            shootAttractor = true;
+        }
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryTouchpad, controller)) {
+            shootAntiAttractor = true;
+        }
+
         var p = OVRInput.GetLocalControllerPosition(controller);
         var r = OVRInput.GetLocalControllerRotation(controller);
         //controllerIcon.SetPositionAndRotation(p, r);
@@ -95,7 +106,13 @@ public class GenCubes : MonoBehaviour
         controllerIcon.localRotation = r;
 #else
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Debug.Log("!!! SPACE !!!");
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+                shootAntiAttractor = true;
+            }
+            else
+            {
+                shootAttractor = true;
+            }
         }
         if (Input.GetMouseButton(0))
         {
@@ -113,6 +130,13 @@ public class GenCubes : MonoBehaviour
             prevMousePosition = null;
         }
 #endif
+
+        if (shootAttractor) {
+            var o = GameObject.Instantiate<Rigidbody>(attractor);
+        }
+        if (shootAntiAttractor) {
+            var o = GameObject.Instantiate<Rigidbody>(antiAttractor);
+        }
 
         RaycastHit hit;
         Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);

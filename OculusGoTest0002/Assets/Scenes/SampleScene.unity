@@ -519,7 +519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &223389080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1176,10 @@ MonoBehaviour:
   text: {fileID: 109126445}
   controllerIcon: {fileID: 952857674}
   goalIcon: {fileID: 81536162}
+  attractor: {fileID: 3788858182274332585, guid: 75fe89da7a89c41aa84667f29e925bfc,
+    type: 3}
+  antiAttractor: {fileID: 3788858182274332585, guid: 40101da22a8594c27b558784714ec208,
+    type: 3}
 --- !u!1 &1778687249
 GameObject:
   m_ObjectHideFlags: 0
