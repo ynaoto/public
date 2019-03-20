@@ -86,6 +86,13 @@ public class GenCubes : MonoBehaviour
     Vector3? prevMousePosition = null;
 #endif
 
+    IEnumerator enjoyYourLife(Rigidbody o, List<Rigidbody> list)
+    {
+        yield return new WaitForSeconds(3.0f);
+        list.Remove(o);
+        GameObject.Destroy(o.gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -139,11 +146,13 @@ public class GenCubes : MonoBehaviour
             var o = GameObject.Instantiate<Rigidbody>(attractor);
             o.AddForce(100.0f*dir, ForceMode.Impulse);
             attractors.Add(o);
+            StartCoroutine(enjoyYourLife(o, attractors));
         }
         if (shootAntiAttractor) {
             var o = GameObject.Instantiate<Rigidbody>(antiAttractor);
             o.AddForce(100.0f*dir, ForceMode.Impulse);
             antiAttractors.Add(o);
+            StartCoroutine(enjoyYourLife(o, antiAttractors));
         }
 
         RaycastHit hit;
