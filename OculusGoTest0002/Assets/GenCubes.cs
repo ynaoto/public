@@ -95,7 +95,7 @@ public class GenCubes : MonoBehaviour
     Transform findNearestGoal(GameObject o, List<GameObject> list)
     {
         float minDist = float.MaxValue;
-        Transform result = list[0].transform;
+        Transform result = null;
         foreach (var g in list)
         {
             float d = Vector3.Distance(o.transform.position, g.transform.position);
@@ -215,8 +215,14 @@ public class GenCubes : MonoBehaviour
         foreach (var o in instances)
         {
             var goal = findNearestGoal(o.gameObject, attractors);
+            Debug.Assert(goal != null);
             o.transform.LookAt(goal);
             o.AddRelativeForce(1.0f * Vector3.forward, ForceMode.Force);
+
+            var antiGoal = findNearestGoal(o.gameObject, antiAttractors);
+            if (antiGoal != null) {
+                o.AddRelativeForce(2.0f * Vector3.back, ForceMode.Force);
+            }
         }
 
         var ql = QualitySettings.GetQualityLevel();
