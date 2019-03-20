@@ -94,6 +94,9 @@ public class GenCubes : MonoBehaviour
         controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
         controllerIcon.localRotation = r;
 #else
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            Debug.Log("!!! SPACE !!!");
+        }
         if (Input.GetMouseButton(0))
         {
             var p = Input.mousePosition;
