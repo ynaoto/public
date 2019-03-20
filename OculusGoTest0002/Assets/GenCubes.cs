@@ -131,15 +131,18 @@ public class GenCubes : MonoBehaviour
         }
 #endif
 
+        Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
+
         if (shootAttractor) {
             var o = GameObject.Instantiate<Rigidbody>(attractor);
+            o.AddForce(100.0f*dir, ForceMode.Impulse);
         }
         if (shootAntiAttractor) {
             var o = GameObject.Instantiate<Rigidbody>(antiAttractor);
+            o.AddForce(100.0f*dir, ForceMode.Impulse);
         }
 
         RaycastHit hit;
-        Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
         int layerMask = 1 << 31;
 
         // 以下の違いで測定できるような性能差は出ていない
