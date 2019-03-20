@@ -21,6 +21,8 @@ public class GenCubes : MonoBehaviour
 
     //List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
     List<Rigidbody> instances = new List<Rigidbody>();
+    List<Rigidbody> attractors = new List<Rigidbody>();
+    List<Rigidbody> antiAttractors = new List<Rigidbody>();
 
     List<Rigidbody> instanceCashe = new List<Rigidbody>();
     Rigidbody getInstanceFromCashe()
@@ -136,10 +138,12 @@ public class GenCubes : MonoBehaviour
         if (shootAttractor) {
             var o = GameObject.Instantiate<Rigidbody>(attractor);
             o.AddForce(100.0f*dir, ForceMode.Impulse);
+            attractors.Add(o);
         }
         if (shootAntiAttractor) {
             var o = GameObject.Instantiate<Rigidbody>(antiAttractor);
             o.AddForce(100.0f*dir, ForceMode.Impulse);
+            antiAttractors.Add(o);
         }
 
         RaycastHit hit;
@@ -180,6 +184,7 @@ public class GenCubes : MonoBehaviour
             }
         }
 
+        /*
         var goal = goalIcon.position;
         foreach (var o in instances)
         {
@@ -189,6 +194,24 @@ public class GenCubes : MonoBehaviour
             //o.AddRelativeForce(0.03f*Vector3.forward, ForceMode.Impulse);
             //o.AddRelativeForce(0.05f*Vector3.forward, ForceMode.VelocityChange);
             //goal = o.position;
+        }
+        */
+        if (0 < attractors.Count) {
+            var goal = attractors[attractors.Count - 1].transform;
+            foreach (var o in instances)
+            {
+                o.transform.LookAt(goal);
+                o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
+            }
+        }
+        else
+        {
+            var goal = goalIcon.position;
+            foreach (var o in instances)
+            {
+                o.transform.LookAt(goal);
+                o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
+            }
         }
 
         var ql = QualitySettings.GetQualityLevel();
