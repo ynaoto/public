@@ -21,8 +21,8 @@ public class GenCubes : MonoBehaviour
 
     //List<Transform> instances = new List<Transform>(5000);  // HERE: ガバッと取っておく。ちょっと性能に効いてる？
     List<Rigidbody> instances = new List<Rigidbody>();
-    List<Rigidbody> attractors = new List<Rigidbody>();
-    List<Rigidbody> antiAttractors = new List<Rigidbody>();
+    List<GameObject> attractors = new List<GameObject>();
+    List<GameObject> antiAttractors = new List<GameObject>();
 
     List<Rigidbody> instanceCashe = new List<Rigidbody>();
     Rigidbody getInstanceFromCashe()
@@ -78,19 +78,34 @@ public class GenCubes : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("********" + transform.hierarchyCapacity);
-        //transform.hierarchyCapacity = 1000;
+        attractors.Add(goalIcon.gameObject);
     }
 
 #if !IS_OCULUS
     Vector3? prevMousePosition = null;
 #endif
 
-    IEnumerator enjoyYourLife(Rigidbody o, List<Rigidbody> list)
+    IEnumerator enjoyYourLife(GameObject o, List<GameObject> list)
     {
         yield return new WaitForSeconds(3.0f);
         list.Remove(o);
-        GameObject.Destroy(o.gameObject);
+        GameObject.Destroy(o);
+    }
+
+    Transform findNearestGoal(GameObject o, List<GameObject> list)
+    {
+        float minDist = float.MaxValue;
+        Transform result = list[0].transform;
+        foreach (var g in list)
+        {
+            float d = Vector3.Distance(o.transform.position, g.transform.position);
+            if (d < minDist)
+            {
+                minDist = d;
+                result = g.transform;
+            }
+        }
+        return result;
     }
 
     // Update is called once per frame
@@ -114,8 +129,10 @@ public class GenCubes : MonoBehaviour
         controllerIcon.localPosition = p;  // what does this mean for 3DoF devices e.g. Oculus Go?
         controllerIcon.localRotation = r;
 #else
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            {
                 shootAntiAttractor = true;
             }
             else
@@ -142,17 +159,19 @@ public class GenCubes : MonoBehaviour
 
         Vector3 dir = controllerIcon.TransformDirection(Vector3.forward);
 
-        if (shootAttractor) {
+        if (shootAttractor)
+        {
             var o = GameObject.Instantiate<Rigidbody>(attractor);
-            o.AddForce(100.0f*dir, ForceMode.Impulse);
-            attractors.Add(o);
-            StartCoroutine(enjoyYourLife(o, attractors));
+            o.AddForce(100.0f * dir, ForceMode.Impulse);
+            attractors.Add(o.gameObject);
+            StartCoroutine(enjoyYourLife(o.gameObject, attractors));
         }
-        if (shootAntiAttractor) {
+        if (shootAntiAttractor)
+        {
             var o = GameObject.Instantiate<Rigidbody>(antiAttractor);
-            o.AddForce(100.0f*dir, ForceMode.Impulse);
-            antiAttractors.Add(o);
-            StartCoroutine(enjoyYourLife(o, antiAttractors));
+            o.AddForce(100.0f * dir, ForceMode.Impulse);
+            antiAttractors.Add(o.gameObject);
+            StartCoroutine(enjoyYourLife(o.gameObject, antiAttractors));
         }
 
         RaycastHit hit;
@@ -193,34 +212,11 @@ public class GenCubes : MonoBehaviour
             }
         }
 
-        /*
-        var goal = goalIcon.position;
         foreach (var o in instances)
         {
+            var goal = findNearestGoal(o.gameObject, attractors);
             o.transform.LookAt(goal);
-            //o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Acceleration);
-            o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
-            //o.AddRelativeForce(0.03f*Vector3.forward, ForceMode.Impulse);
-            //o.AddRelativeForce(0.05f*Vector3.forward, ForceMode.VelocityChange);
-            //goal = o.position;
-        }
-        */
-        if (0 < attractors.Count) {
-            var goal = attractors[attractors.Count - 1].transform;
-            foreach (var o in instances)
-            {
-                o.transform.LookAt(goal);
-                o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
-            }
-        }
-        else
-        {
-            var goal = goalIcon.position;
-            foreach (var o in instances)
-            {
-                o.transform.LookAt(goal);
-                o.AddRelativeForce(1.0f*Vector3.forward, ForceMode.Force);
-            }
+            o.AddRelativeForce(1.0f * Vector3.forward, ForceMode.Force);
         }
 
         var ql = QualitySettings.GetQualityLevel();
