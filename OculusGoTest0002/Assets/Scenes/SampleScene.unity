@@ -1036,7 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b76319bce89b549b1a1fdc9b8f11d692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 400124, guid: 0673f7b1f63f148c7a5ddd57efa90ebc, type: 3}
+  prefab: {fileID: 6809161082384667917, guid: 0673f7b1f63f148c7a5ddd57efa90ebc, type: 3}
   prefab2: {fileID: 4617670891443023795, guid: 3b97435d7586b45e4ad65a3941c829ec, type: 3}
   text: {fileID: 109126445}
   controllerIcon: {fileID: 952857674}
