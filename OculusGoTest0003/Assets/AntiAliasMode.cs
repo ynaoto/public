@@ -16,11 +16,25 @@ public class AntiAliasMode : MonoBehaviour
     };
     int aaModeIdx = 0;
 
+    float minDt;
+    float maxDt;
+    float sumDt;
+    int numDt;
+
+    void updateAntialiasingMode()
+    {
+        ppl.antialiasingMode = aaModes[aaModeIdx];
+        minDt = float.NaN;
+        maxDt = float.NaN;
+        sumDt = 0;
+        numDt = 0;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         ppl = GetComponent<PostProcessLayer>();
-        ppl.antialiasingMode = aaModes[aaModeIdx];
+        updateAntialiasingMode();
     }
 
     // Update is called once per frame
@@ -32,9 +46,17 @@ public class AntiAliasMode : MonoBehaviour
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, controller))
             {
                 aaModeIdx = (aaModeIdx + 1) % aaModes.Length;
-                ppl.antialiasingMode = aaModes[aaModeIdx];
+                updateAntialiasingMode();
             }
         }
-        text.text = ppl.antialiasingMode.ToString();
+        var dt = Time.deltaTime;
+        minDt = float.IsNaN(minDt) ? dt : Mathf.Min(minDt, dt);
+        maxDt = float.IsNaN(maxDt) ? dt : Mathf.Max(maxDt, dt);
+        sumDt += dt;
+        numDt++;
+        var ql = QualitySettings.GetQualityLevel();
+        text.text = $"{QualitySettings.names[ql]}\n"
+            + $"{ppl.antialiasingMode}\n"
+            + $"{(int)(1000 * minDt)}; {(int)(1000 * dt)}; {(int)(1000 * maxDt)} ({(int)(1000 * sumDt / numDt)}) ms";
     }
 }
