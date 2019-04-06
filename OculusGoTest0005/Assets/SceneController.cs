@@ -30,8 +30,8 @@ public class SceneController : MonoBehaviour
             if (OVRInput.Get(OVRInput.Button.PrimaryTouchpad))
             {
                 var v = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
-                cameraHolder.transform.Translate(0.0f, 0.0f, -0.1f*v.y);
-                Debug.Log($"v.y = {v.y}; camera at {camera.transform.position}");
+                var d = camera.transform.forward;
+                cameraHolder.transform.Translate(0.1f*v.y*d);
             }
         }
     }
