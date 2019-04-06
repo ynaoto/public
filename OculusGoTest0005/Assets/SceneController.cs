@@ -17,6 +17,15 @@ public class SceneController : MonoBehaviour
         cameraHolder.transform.SetParent(transform);
     }
 
+    IEnumerator loadNextScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -25,7 +34,7 @@ public class SceneController : MonoBehaviour
         {
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
-                SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
+                StartCoroutine(loadNextScene());
             }
             if (OVRInput.Get(OVRInput.Button.PrimaryTouchpad))
             {
