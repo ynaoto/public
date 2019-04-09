@@ -5,23 +5,79 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public string nextSceneName;
-    public Camera camera;
-    GameObject cameraHolder;
+    public string[] sceneNames;
+    int sceneIdx = 0;
+    AsyncOperation asyncLoad;
+
+    void preloadNextScene()
+    {
+        int idx = (sceneIdx + 1) % sceneNames.Length;
+        asyncLoad = SceneManager.LoadSceneAsync(sceneNames[idx], LoadSceneMode.Additive);
+        asyncLoad.allowSceneActivation = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraHolder = new GameObject("cameraHolder");
-        camera.transform.SetParent(cameraHolder.transform);
-        cameraHolder.transform.SetParent(transform);
+        SceneManager.LoadScene(sceneNames[sceneIdx], LoadSceneMode.Additive);
+        //preloadNextScene();
     }
 
     IEnumerator loadNextScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(nextSceneName);
+        /*
+        Debug.Log(nextSceneName + " to load");
+        //asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Single);
+        asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+        asyncLoad.allowSceneActivation = false;
         while (!asyncLoad.isDone)
         {
+            yield return null;
+        }
+        asyncLoad.allowSceneActivation = true;
+        Debug.Log(nextSceneName + " to load OK");
+
+        Debug.Log(gameObject.scene.name + " to unload");
+        var asyncUnload = SceneManager.UnloadSceneAsync(gameObject.scene.name);
+        while (!asyncUnload.isDone)
+        {
+            yield return null;
+        }
+        Debug.Log(gameObject.scene.name + " to unload OK");
+        */
+
+        // asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
+        // asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            if (0.9f <= asyncLoad.progress)
+            {
+                SceneManager.UnloadSceneAsync(sceneNames[sceneIdx]);
+                sceneIdx = (sceneIdx + 1) % sceneNames.Length;
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+        // yield return asyncLoad;
+        // asyncLoad.allowSceneActivation = true;
+        // yield return SceneManager.UnloadSceneAsync(gameObject.scene.name);
+        //SceneManager.UnloadSceneAsync(gameObject.scene.name);
+    }
+
+    IEnumerator loadNextScene2()
+    {
+        int idx = (sceneIdx + 1) % sceneNames.Length;
+        asyncLoad = SceneManager.LoadSceneAsync(sceneNames[idx], LoadSceneMode.Additive);
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            Debug.Log("PROGRESS: " + asyncLoad.progress);
+            if (0.9f <= asyncLoad.progress)
+            {
+                asyncLoad.allowSceneActivation = true;
+                yield return SceneManager.UnloadSceneAsync(sceneNames[sceneIdx]);
+                sceneIdx = (sceneIdx + 1) % sceneNames.Length;
+            }
             yield return null;
         }
     }
@@ -34,13 +90,8 @@ public class SceneController : MonoBehaviour
         {
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
-                StartCoroutine(loadNextScene());
-            }
-            if (OVRInput.Get(OVRInput.Button.PrimaryTouchpad))
-            {
-                var v = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
-                var d = camera.transform.forward;
-                cameraHolder.transform.Translate(0.1f*v.y*d);
+                // StartCoroutine(loadNextScene());
+                StartCoroutine(loadNextScene2());
             }
         }
     }
