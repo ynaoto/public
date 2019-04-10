@@ -6,80 +6,51 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     public string[] sceneNames;
-    int sceneIdx = 0;
-    AsyncOperation asyncLoad;
+    // int sceneIdx = 0;
+    int sceneIdx;
+    AsyncOperation asyncLoadNextScene;
 
-    void preloadNextScene()
+    AsyncOperation startLoadScene(int idx)
     {
-        int idx = (sceneIdx + 1) % sceneNames.Length;
-        asyncLoad = SceneManager.LoadSceneAsync(sceneNames[idx], LoadSceneMode.Additive);
+        var asyncLoad = SceneManager.LoadSceneAsync(sceneNames[idx], LoadSceneMode.Additive);
         asyncLoad.allowSceneActivation = false;
+        return asyncLoad;
     }
-
-    // Start is called before the first frame update
-    void Start()
+    
+    IEnumerator waitAsyncLoad(AsyncOperation asyncLoad)
     {
-        SceneManager.LoadScene(sceneNames[sceneIdx], LoadSceneMode.Additive);
-        //preloadNextScene();
-    }
-
-    IEnumerator loadNextScene()
-    {
-        /*
-        Debug.Log(nextSceneName + " to load");
-        //asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Single);
-        asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
-        asyncLoad.allowSceneActivation = false;
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-        asyncLoad.allowSceneActivation = true;
-        Debug.Log(nextSceneName + " to load OK");
-
-        Debug.Log(gameObject.scene.name + " to unload");
-        var asyncUnload = SceneManager.UnloadSceneAsync(gameObject.scene.name);
-        while (!asyncUnload.isDone)
-        {
-            yield return null;
-        }
-        Debug.Log(gameObject.scene.name + " to unload OK");
-        */
-
-        // asyncLoad = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Additive);
-        // asyncLoad.allowSceneActivation = false;
-        while (!asyncLoad.isDone)
-        {
-            if (0.9f <= asyncLoad.progress)
-            {
-                SceneManager.UnloadSceneAsync(sceneNames[sceneIdx]);
-                sceneIdx = (sceneIdx + 1) % sceneNames.Length;
-                asyncLoad.allowSceneActivation = true;
-            }
-            yield return null;
-        }
-        // yield return asyncLoad;
-        // asyncLoad.allowSceneActivation = true;
-        // yield return SceneManager.UnloadSceneAsync(gameObject.scene.name);
-        //SceneManager.UnloadSceneAsync(gameObject.scene.name);
-    }
-
-    IEnumerator loadNextScene2()
-    {
-        int idx = (sceneIdx + 1) % sceneNames.Length;
-        asyncLoad = SceneManager.LoadSceneAsync(sceneNames[idx], LoadSceneMode.Additive);
-        asyncLoad.allowSceneActivation = false;
         while (!asyncLoad.isDone)
         {
             Debug.Log("PROGRESS: " + asyncLoad.progress);
             if (0.9f <= asyncLoad.progress)
             {
                 asyncLoad.allowSceneActivation = true;
-                yield return SceneManager.UnloadSceneAsync(sceneNames[sceneIdx]);
-                sceneIdx = (sceneIdx + 1) % sceneNames.Length;
             }
             yield return null;
         }
+        Debug.Log("COMPLETED: " + asyncLoad.progress);
+    }
+
+    IEnumerator activateNextScene()
+    {
+        yield return waitAsyncLoad(asyncLoadNextScene);
+        asyncLoadNextScene = startLoadScene((sceneIdx + 1) % sceneNames.Length);
+    }
+
+    IEnumerator switchToNextScene()
+    {
+        yield return waitAsyncLoad(asyncLoadNextScene);
+        yield return SceneManager.UnloadSceneAsync(sceneNames[sceneIdx]);
+        sceneIdx = (sceneIdx + 1) % sceneNames.Length;
+        asyncLoadNextScene = startLoadScene((sceneIdx + 1) % sceneNames.Length);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        sceneIdx = 0;
+        asyncLoadNextScene = startLoadScene(sceneIdx);
+        StartCoroutine(activateNextScene());
     }
 
     // Update is called once per frame
@@ -90,8 +61,7 @@ public class SceneController : MonoBehaviour
         {
             if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
-                // StartCoroutine(loadNextScene());
-                StartCoroutine(loadNextScene2());
+                StartCoroutine(switchToNextScene());
             }
         }
     }
