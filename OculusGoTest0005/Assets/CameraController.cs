@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
     public Camera camera;
-    GameObject cameraHolder;
+    public TextMesh text;
 
     // Start is called before the first frame update
     void Start()
     {
-        cameraHolder = new GameObject("cameraHolder");
-        camera.transform.SetParent(cameraHolder.transform);
-        cameraHolder.transform.SetParent(transform);
+        camera.transform.SetParent(transform);
+        text.transform.SetParent(camera.transform);
+        text.transform.localPosition = new Vector3(0.0f, 0.0f, 15.0f);
+        text.transform.localRotation = Quaternion.identity;
+        text.text = gameObject.scene.name;
     }
 
     // Update is called once per frame
@@ -25,7 +28,7 @@ public class CameraController : MonoBehaviour
             {
                 var v = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
                 var d = camera.transform.forward;
-                cameraHolder.transform.Translate(0.1f*v.y*d);
+                transform.Translate(0.1f*v.y*d);
             }
         }
     }
