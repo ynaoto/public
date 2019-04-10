@@ -64,5 +64,12 @@ public class SceneController : MonoBehaviour
                 StartCoroutine(switchToNextScene());
             }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine(switchToNextScene());
+            }
+        }
     }
 }
