@@ -15,12 +15,12 @@ public class CameraController : MonoBehaviour
         text.transform.SetParent(camera.transform);
         text.transform.localPosition = new Vector3(0.0f, 0.0f, 15.0f);
         text.transform.localRotation = Quaternion.identity;
-        text.text = gameObject.scene.name;
     }
 
     // Update is called once per frame
     void Update()
     {
+        text.text = gameObject.scene.name + "; " + camera.transform.rotation;
         var controller = OVRInput.GetActiveController();
         if (controller != OVRInput.Controller.None)
         {
