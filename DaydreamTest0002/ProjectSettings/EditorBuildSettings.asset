@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/GoogleVR/Beta/Demos/Scenes/HelloMR.unity
+    guid: abadaf21babd44e5998c8ed818bb7650
   m_configObjects: {}
