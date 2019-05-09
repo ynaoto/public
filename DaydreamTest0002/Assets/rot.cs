@@ -14,5 +14,13 @@ public class rot : MonoBehaviour
     void Update()
     {
         transform.Rotate(0.0f, 30.0f*Time.deltaTime, 0.0f);
+        // Debug.Log(Input.location.isEnabledByUser);
+        if (Input.location.isEnabledByUser)
+        {
+            var alt = Input.location.lastData.altitude;
+            var lat = Input.location.lastData.latitude;
+            var lng = Input.location.lastData.longitude;
+            Debug.Log($"{alt}, {lat}, {lng}");
+        }
     }
 }
