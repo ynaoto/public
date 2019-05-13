@@ -11,6 +11,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: CandyRockStar Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 11400008, guid: 44374dd563c03d64aaff55a08495dd9f, type: 3}
+      propertyPath: refAudioSource
+      value: 
+      objectReference: {fileID: 4847575210826557324, guid: 6d27ecad14e054307b091c9ac846c2a3,
+        type: 3}
+    - target: {fileID: 9500000, guid: 44374dd563c03d64aaff55a08495dd9f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400378, guid: 44374dd563c03d64aaff55a08495dd9f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -53,10 +62,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400378, guid: 44374dd563c03d64aaff55a08495dd9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 44374dd563c03d64aaff55a08495dd9f, type: 3}
-      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

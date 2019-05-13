@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityChan;
 
 public class ARTest : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class ARTest : MonoBehaviour
     {
         if (virgin)
         {
-            Instantiate(prefab, args.plane.transform);
+            var obj = Instantiate(prefab, args.plane.transform);
+            var musicStarter = obj.GetComponent<MusicStarter>();
+            musicStarter.refAudioSource = GetComponent<AudioSource>();
             virgin = false;
         }
     }
