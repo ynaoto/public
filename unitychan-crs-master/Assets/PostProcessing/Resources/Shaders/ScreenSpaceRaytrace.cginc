@@ -5,7 +5,7 @@
 #ifndef __SCREEN_SPACE_RAYTRACE__
 #define __SCREEN_SPACE_RAYTRACE__
 
-sampler2D_float _CameraDepthTexture;
+UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
 
 float distanceSquared(float2 A, float2 B)
 {
@@ -58,7 +58,7 @@ void rayIterations(in bool traceBehindObjects, inout float2 P, inout float stepD
         // Q at each point
         hitPixel = permute ? P.yx : P;
 
-        sceneZ = tex2Dlod(_CameraDepthTexture, float4(hitPixel * invSize,0,0)).r;
+        sceneZ = SAMPLE_RAW_DEPTH_TEXTURE_LOD(_CameraDepthTexture, float4(hitPixel * invSize,0,0)).r;
         sceneZ = -LinearEyeDepth(sceneZ);
 
         bool isBehind = (rayZMin <= sceneZ);

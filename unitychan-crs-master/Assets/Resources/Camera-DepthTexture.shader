@@ -114,7 +114,7 @@ struct v2f {
 };
 v2f vert( appdata_full v ) {
     v2f o;
-    TreeVertBark(v);
+    //TreeVertBark(v);
 	
 	o.pos = UnityObjectToClipPos( v.vertex );
     UNITY_TRANSFER_DEPTH(o.depth);
@@ -146,7 +146,7 @@ struct v2f {
 };
 v2f vert( appdata_full v ) {
     v2f o;
-    TreeVertLeaf(v);
+    //TreeVertLeaf(v);
 	
 	o.pos = UnityObjectToClipPos( v.vertex );
 	o.uv = v.texcoord.xy;
