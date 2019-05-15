@@ -668,6 +668,7 @@ MonoBehaviour:
   miscPrefabs:
   - {fileID: 100000, guid: 0329b91dd79424babb86c8dbc3919134, type: 3}
   - {fileID: 100000, guid: f468251a01e8242df8066e377619a712, type: 3}
+  - {fileID: 100000, guid: f1efd132732334185ad79bc7263913ec, type: 3}
   - {fileID: 100000, guid: c70aff9297e6d4e9fa6e82c0038ded02, type: 3}
   - {fileID: 100000, guid: 0291ac2d4e1e54df6bfa4776e3683a24, type: 3}
   cameraPoints:
