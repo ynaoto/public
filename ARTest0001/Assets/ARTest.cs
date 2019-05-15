@@ -11,12 +11,16 @@ public class ARTest : MonoBehaviour
     [SerializeField]
     Transform defaultOrigin;
     bool virgin = true;
+    GameObject instance;
+    Animator animator;
+
 
     void goUnityChan(Transform parent)
     {
-        var obj = Instantiate(prefab, parent);
-        var musicStarter = obj.GetComponent<MusicStarter>();
+        instance = Instantiate(prefab, parent);
+        var musicStarter = instance.GetComponent<MusicStarter>();
         musicStarter.refAudioSource = GetComponent<AudioSource>();
+        animator = instance.GetComponent<Animator>();
     }
 
     void planeAdded(ARPlaneAddedEventArgs args)
@@ -33,14 +37,21 @@ public class ARTest : MonoBehaviour
     {
         var planeManager = GetComponent<ARPlaneManager>();
         planeManager.planeAdded += planeAdded;
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         goUnityChan(defaultOrigin);
-        #endif
+#endif
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (animator != null)
+        {
+            var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            if (1.0f <= stateInfo.normalizedTime)
+            {
+                animator.Play(null, 0, 0.0f);
+            }
+        }
     }
 }
