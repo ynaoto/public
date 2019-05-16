@@ -707,8 +707,10 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   vrEditorSettings:
     daydream:
-      daydreamIconForeground: {fileID: 0}
-      daydreamIconBackground: {fileID: 0}
+      daydreamIconForeground: {fileID: 2800000, guid: 1e30253abf74b405ba4fac22317d53f3,
+        type: 3}
+      daydreamIconBackground: {fileID: 2800000, guid: 1e30253abf74b405ba4fac22317d53f3,
+        type: 3}
   cloudServicesEnabled: {}
   luminIcon:
     m_Name: 
