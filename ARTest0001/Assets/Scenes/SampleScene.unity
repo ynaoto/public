@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_LightEstimationMode: 1
 --- !u!114 &754821043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,8 +403,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1584850130}
   - component: {fileID: 1584850129}
-  - component: {fileID: 1584850132}
   - component: {fileID: 1584850131}
+  - component: {fileID: 1584850132}
   m_Layer: 0
   m_Name: Performer
   m_TagString: Untagged
@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3282609823797630586, guid: 299e118524b51459c98c89eae82fb500, type: 3}
+  light: {fileID: 705507994}
   defaultOrigin: {fileID: 1736855316}
 --- !u!4 &1584850130
 Transform:
@@ -473,7 +474,7 @@ AudioSource:
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
-  BypassListenerEffects: 0
+  BypassListenerEffects: 1
   BypassReverbZones: 0
   rolloffCustomCurve:
     serializedVersion: 2
