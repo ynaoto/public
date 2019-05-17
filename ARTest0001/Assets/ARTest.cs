@@ -35,7 +35,8 @@ public class ARTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var planeManager = GetComponent<ARPlaneManager>();
+        var planeManager = FindObjectOfType<ARPlaneManager>();
+        //var planeManager = GetComponent<ARPlaneManager>();
         planeManager.planesChanged += planeChanged;
 #if UNITY_EDITOR
         goUnityChan(defaultOrigin);
