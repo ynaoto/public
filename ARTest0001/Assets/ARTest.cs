@@ -23,11 +23,11 @@ public class ARTest : MonoBehaviour
         animator = instance.GetComponent<Animator>();
     }
 
-    void planeAdded(ARPlaneAddedEventArgs args)
+    void planeChanged(ARPlanesChangedEventArgs args)
     {
-        if (virgin)
+        if (virgin && 0 < args.added.Count)
         {
-            goUnityChan(args.plane.transform);
+            goUnityChan(args.added[0].transform);
             virgin = false;
         }
     }
@@ -36,7 +36,7 @@ public class ARTest : MonoBehaviour
     void Start()
     {
         var planeManager = GetComponent<ARPlaneManager>();
-        planeManager.planeAdded += planeAdded;
+        planeManager.planesChanged += planeChanged;
 #if UNITY_EDITOR
         goUnityChan(defaultOrigin);
 #endif
