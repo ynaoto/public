@@ -10,8 +10,6 @@ public class ARTest : MonoBehaviour
     [SerializeField]
     GameObject prefab;
     [SerializeField]
-    Light light;
-    [SerializeField]
     Transform defaultOrigin;
     bool virgin = true;
     GameObject instance;
@@ -33,34 +31,11 @@ public class ARTest : MonoBehaviour
         }
     }
 
-    void cameraFrameReceived(ARCameraFrameEventArgs args)
-    {
-        if (light != null)
-        {
-            var le = args.lightEstimation;
-            if (le.averageBrightness.HasValue)
-            {
-                light.intensity = le.averageBrightness.Value;
-            }
-            if (le.averageColorTemperature.HasValue)
-            {
-                light.colorTemperature = le.averageColorTemperature.Value;
-            }
-            if (le.colorCorrection.HasValue)
-            {
-                light.color = le.colorCorrection.Value;
-            }
-        }
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         var planeManager = FindObjectOfType<ARPlaneManager>();
         planeManager.planesChanged += planeChanged;
-
-        var cameraManager = FindObjectOfType<ARCameraManager>();
-        cameraManager.frameReceived += cameraFrameReceived;
 
 #if UNITY_EDITOR
         goUnityChan(defaultOrigin);
