@@ -21,15 +21,17 @@ public class ARTest : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+            instance = Instantiate(prefab);
             animator = instance.GetComponent<Animator>();
             var musicStarter = instance.GetComponent<MusicStarter>();
             musicStarter.refAudioSource = GetComponent<AudioSource>();
         }
-        else
-        {
-            instance.transform.position = position;
-        }
+
+        instance.transform.position = position;
+        var camera = FindObjectOfType<Camera>();
+        var cp = camera.transform.position;
+        var target = new Vector3(cp.x, position.y, cp.z);
+        instance.transform.LookAt(target);
     }
 
     // Start is called before the first frame update
