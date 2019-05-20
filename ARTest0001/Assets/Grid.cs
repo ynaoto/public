@@ -9,11 +9,11 @@ public class Grid : MonoBehaviour
 
     void Awake()
     {
-        for (float x = -2; x <= 2; x += 0.5f)
+        for (float x = -1; x <= 1; x += 1.0f)
         {
-            for (float y = -2; y <= 2; y += 0.5f)
+            for (float y = 0; y <= 2; y += 1.0f)
             {
-                for (float z = -2; z <= 2; z += 0.5f)
+                for (float z = -1; z <= 1; z += 1.0f)
                 {
                     Instantiate(pointPrefab, new Vector3(x, y, z), Quaternion.identity);
                 }

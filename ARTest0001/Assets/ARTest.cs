@@ -15,9 +15,9 @@ public class ARTest : MonoBehaviour
     GameObject instance;
     Animator animator;
 
-    void goUnityChan(Transform parent)
+    void goUnityChan(Vector3 position)
     {
-        instance = Instantiate(prefab, parent);
+        instance = Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
         var musicStarter = instance.GetComponent<MusicStarter>();
         musicStarter.refAudioSource = GetComponent<AudioSource>();
     }
@@ -26,7 +26,7 @@ public class ARTest : MonoBehaviour
     {
         if (virgin && 0 < args.added.Count)
         {
-            goUnityChan(args.added[0].transform);
+            goUnityChan(args.added[0].transform.position);
             virgin = false;
         }
     }
@@ -38,7 +38,7 @@ public class ARTest : MonoBehaviour
         planeManager.planesChanged += planeChanged;
 
 #if UNITY_EDITOR
-        goUnityChan(defaultOrigin);
+        goUnityChan(defaultOrigin.transform.position);
 #endif
     }
 
