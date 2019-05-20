@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using UnityChan;
 
 [RequireComponent(typeof(AudioSource))]
@@ -14,43 +15,49 @@ public class ARTest : MonoBehaviour
     bool virgin = true;
     GameObject instance;
     Animator animator;
+    ARRaycastManager raycastManager;
 
     void goUnityChan(Vector3 position)
     {
-        instance = Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
-        var musicStarter = instance.GetComponent<MusicStarter>();
-        musicStarter.refAudioSource = GetComponent<AudioSource>();
-    }
-
-    void planeChanged(ARPlanesChangedEventArgs args)
-    {
-        if (virgin && 0 < args.added.Count)
+        if (instance == null)
         {
-            goUnityChan(args.added[0].transform.position);
-            virgin = false;
+            instance = Instantiate(prefab, position, Quaternion.Euler(0, 180, 0));
+            animator = instance.GetComponent<Animator>();
+            var musicStarter = instance.GetComponent<MusicStarter>();
+            musicStarter.refAudioSource = GetComponent<AudioSource>();
+        }
+        else
+        {
+            instance.transform.position = position;
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        var planeManager = FindObjectOfType<ARPlaneManager>();
-        planeManager.planesChanged += planeChanged;
+        raycastManager = FindObjectOfType<ARRaycastManager>();
 
 #if UNITY_EDITOR
         goUnityChan(defaultOrigin.transform.position);
 #endif
     }
 
+    static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+
     // Update is called once per frame
     void Update()
     {
-        if (instance != null)
+        if (0 < Input.touchCount)
         {
-            if (animator == null)
+            var touch = Input.GetTouch(0);
+            if (raycastManager.Raycast(touch.position, s_Hits, TrackableType.PlaneWithinPolygon))
             {
-                animator = instance.GetComponent<Animator>();
+                goUnityChan(s_Hits[0].pose.position);
             }
+        }
+
+        if (animator != null)
+        {
             var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (1.0f <= stateInfo.normalizedTime)
             {
