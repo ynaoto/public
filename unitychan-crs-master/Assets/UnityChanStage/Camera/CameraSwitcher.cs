@@ -34,13 +34,6 @@ public class CameraSwitcher : MonoBehaviour
 
     void Update()
     {
-        // Update the follow point with the exponential easing function.
-        var param = Mathf.Exp(-rotationSpeed * Time.deltaTime);
-        followPoint = Vector3.Lerp(target.position, followPoint, param);
-
-        // Look at the follow point.
-        transform.LookAt(followPoint);
-
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
             if (!usingFixedCamera)
@@ -58,6 +51,16 @@ public class CameraSwitcher : MonoBehaviour
             {
                 usingFixedCamera = false;
             }
+        }
+
+        if (!usingFixedCamera)
+        {
+            // Update the follow point with the exponential easing function.
+            var param = Mathf.Exp(-rotationSpeed * Time.deltaTime);
+            followPoint = Vector3.Lerp(target.position, followPoint, param);
+
+            // Look at the follow point.
+            transform.LookAt(followPoint);
         }
     }
 
