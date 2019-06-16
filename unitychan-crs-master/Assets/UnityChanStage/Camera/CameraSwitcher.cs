@@ -11,6 +11,9 @@ public class CameraSwitcher : MonoBehaviour
     public float minDistance = 0.5f;
     public AnimationCurve fovCurve = AnimationCurve.Linear(1, 30, 10, 30);
     public bool autoChange = true;
+    public Transform[] fixedCameraPositions;
+    bool usingFixedCamera = false;
+    int fixedCameraIdx;
 
     Transform target;
     Vector3 followPoint;
@@ -37,11 +40,32 @@ public class CameraSwitcher : MonoBehaviour
 
         // Look at the follow point.
         transform.LookAt(followPoint);
+
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            if (!usingFixedCamera)
+            {
+                fixedCameraIdx = 0;
+                usingFixedCamera = true;
+            }
+            if (usingFixedCamera && fixedCameraIdx < fixedCameraPositions.Length)
+            {
+                var t = fixedCameraPositions[fixedCameraIdx];
+                transform.SetPositionAndRotation(t.position, t.rotation);
+                fixedCameraIdx++;
+            }
+            else
+            {
+                usingFixedCamera = false;
+            }
+        }
     }
 
     // Change the camera position.
     public void ChangePosition(Transform destination, bool forceStable = false)
     {
+        if (usingFixedCamera) return;
+
         // Do nothing if disabled.
         if (!enabled) return;
 
